@@ -42,7 +42,7 @@ int SCREEN_WIDTH, SCREEN_HEIGHT;
 
 // Cámara
 // Posición inicial de la cámara
-Camera  camera(glm::vec3(0.0f, 0.0f, 2.0f));
+Camera  camera(glm::vec3(0.0f, 3.0f, 2.0f));
 GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
@@ -73,6 +73,8 @@ glm::vec3 LightP1;
 float movX, movY, movZ;
 float scaleX, scaleY, scaleZ;
 float rot = 0.0f;
+
+int contador = 0;
 
 // Deltatime
 GLfloat deltaTime = 0.0f;	// Tiempo entre el cuadro actual y el cuadro anterior
@@ -135,6 +137,8 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
+	// Activa antialiasing 4x
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	// Cree un objeto GLFWwindow para utilizar las funciones de GLFW
@@ -200,6 +204,7 @@ int main()
 
 	// Carga de modelos OBJ
 	Model cubo((char*)"Models/Prueba/cube.obj");
+	Model edificio((char*)"Models/ciudad.obj");
 	
 	// Texturas del skybox
 	vector<const GLchar*> faces;
@@ -351,8 +356,12 @@ int main()
 
 	while (!glfwWindowShouldClose(window))
 	{
+		contador = contador + 1;
 		// Variables para debuguear
-		//showDebugVars();
+		if (contador == 20) {
+			//showDebugVars();
+			contador = 0;
+		}
 
 		// Calcular deltatime del cuadro actual
 		GLfloat currentFrame = glfwGetTime();
@@ -384,22 +393,22 @@ int main()
 		// == ==========================
 
 		// Configuración de la luz direccional
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), 0.0f, 0.0f, 0.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.0f, 0.0f, 0.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.0f, 0.0f, 0.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 0.0f, 0.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), 0.0f, -1.0f, -0.5f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.7f, 0.7f, 0.7f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.7f, 0.7f, 0.7f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 0.4f, 0.4f, 0.4f);
 
 		// Configuración de las luces puntuales. Hasta 8 configurando #define NUMBER_OF_POINT_LIGHTS en lightning.frag
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].position"), pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].ambient"), 0.0f, 0.5f, 0.5f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].diffuse"), 0.0f, 1.0f, 1.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].specular"), 0.0f, 1.0f, 1.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].ambient"), 0.0f, 0.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].diffuse"), 0.8f, 0.8f, 0.8f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].specular"), 1.0f, 1.0f, 1.0f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].constant"), 1.0f);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].linear"), 0.14);
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].quadratic"), 0.07);
 
 		// Configuración de la luz tipo "Spotlight"
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.position"), 0.0f, 0.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.position"), 0.0f, 0.0f, 0.0f); //Apagada
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.direction"), 0.0f, 0.0f, 0.0f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.ambient"), 0.0f, 0.0f, 0.0f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.diffuse"), LightP1.x * 0.0f, LightP1.y * 0.0f, LightP1.z * 0.0f);
@@ -455,13 +464,14 @@ int main()
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(1.0f));
+		//model = glm::translate(model, glm::vec3(movX, movY, movZ));
+		model = glm::scale(model, glm::vec3(0.1f));
 		//model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
 		// Dibuja un modelo OBJ o FBX
-		cubo.Draw(lightingShader);
+		edificio.Draw(lightingShader);
+
 
 		// Destruye el arreglo de vértices del VAO
 		glBindVertexArray(0);
@@ -495,7 +505,7 @@ int main()
 			//Dibuja la luz como un plano en XY
 			glDrawArrays(GL_TRIANGLES, 4, 6);
 
-			printf("Light [%i]: %0.2f %0.2f %0.2f\n", i, pointLightPositions[i].x, pointLightPositions[i].y, pointLightPositions[i].z);
+			//printf("Light [%i]: %0.2f %0.2f %0.2f\n", i, contador, pointLightPositions[i].y, pointLightPositions[i].z);
 		}
 
 		//Destruye el arreglo de vértices del LightVAO
@@ -572,10 +582,11 @@ int main()
 }
 
 void showDebugVars() {
-	printf("X= %0.2f Y= %0.2f, Z= %0.2f\n", movX, movY, movZ);
-	printf("scX= %0.2f scY= %0.2f, scZ= %0.2f\n", scaleX, scaleY, scaleZ);
-	printf("camX= %0.2f camY= %0.2f, camZ= %0.2f\n", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
-}
+		system("CLS");
+		printf("X= %0.2f Y= %0.2f, Z= %0.2f\n", movX, movY, movZ);
+		printf("scX= %0.2f scY= %0.2f, scZ= %0.2f\n", scaleX, scaleY, scaleZ);
+		printf("camX= %0.2f camY= %0.2f, camZ= %0.2f\n", camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
+	}
 
 //void animacion()
 //{
