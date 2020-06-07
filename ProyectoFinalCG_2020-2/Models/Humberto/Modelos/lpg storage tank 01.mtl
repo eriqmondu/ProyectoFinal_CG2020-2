@@ -1,0 +1,11 @@
+# Created with Anim8or 1.00
+# Object "Lpg Storage Tank":
+
+newmtl tex_lpgtank_d
+Ka 0.878 0.878 0.878
+Kd 0.878 0.878 0.878
+Ks 1 1 1
+Ns 752.6
+map_Kd Texturas\tex_lpgtank_d.png
+map_Ks Texturas\tex_lpgtank_s.png
+
