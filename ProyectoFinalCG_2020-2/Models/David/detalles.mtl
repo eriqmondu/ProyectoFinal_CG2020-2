@@ -1,5 +1,5 @@
-# Blender MTL File: 'ciudad.blend'
-# Material Count: 15
+# Blender MTL File: 'None'
+# Material Count: 9
 
 newmtl Anuncio
 Ns 225.000000
@@ -10,18 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd Texturas\espectacular.jpg
-
-newmtl Anuncio.001
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.021151 0.800000 0.023342
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd Texturas\espectacular.jpg
+map_Kd Texturas\\espectacular.jpg
 
 newmtl Base
 Ns 225.000000
@@ -32,18 +21,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd Texturas\azul.jpg
-
-newmtl Base.001
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.048341 0.042323 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd Texturas\azul.jpg
+map_Kd Texturas\\azul.jpg
 
 newmtl Lateral
 Ns 225.000000
@@ -54,9 +32,9 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd Texturas\white.jpg
+map_Kd Texturas\\white.jpg
 
-newmtl Lateral.001
+newmtl Mat.Vent1.001
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -65,7 +43,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd Texturas\white.jpg
 
 newmtl Material__0.001
 Ns 10.000002
@@ -76,7 +53,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 1
-map_Kd Texturas\texture.jpg
+map_Kd Texturas\\texture.jpg
 
 newmtl Metal.001
 Ns 225.000000
@@ -87,7 +64,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd Texturas\metal.jpg
+map_Kd Texturas\\metal.jpg
 
 newmtl Metal1.001
 Ns 225.000000
@@ -98,7 +75,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd Texturas\metal1.jpg
+map_Kd Texturas\\metal1.jpg
 
 newmtl Metal2.001
 Ns 225.000000
@@ -109,7 +86,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd Texturas\bureMetal.jpg
+map_Kd Texturas\\bureMetal.jpg
 
 newmtl None.001
 Ns 500.000001
@@ -120,4 +97,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd Texturas\Madera.jpg
+map_Kd Texturas\\Madera.jpg
