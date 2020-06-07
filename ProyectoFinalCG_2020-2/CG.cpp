@@ -118,7 +118,7 @@ int main()
     // OBJ model loading
     // -----------------
     std::cout << "Loading OBJ Models..." << std::endl;
-    Model edificio((char*)"Models/Ciudad/ciudad.obj");
+    Model edificio((char*)"Models/ciudad.obj");
     Model mujer((char*)"Models/batmanTexturizado.obj");
 
     // FBX model loading
@@ -274,15 +274,16 @@ int main()
     // -------------
 
     // Positions (only if static, otherwise insert lightPositions inside the render loop)
-    //std::vector<glm::vec3> lightPositions;
-    //lightPositions.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
-    //lightPositions.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+    std::vector<glm::vec3> lightPositions;
+    lightPositions.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+    lightPositions.push_back(glm::vec3(0.0f, 5.0f, 0.0f));
+    lightPositions.push_back(glm::vec3(0.0f, 5.0f, 3.0f));
 
     // Colors (only if static, otherwise insert lightColors inside the render loop)
     std::vector<glm::vec3> lightColors;
     lightColors.push_back(glm::vec3(10.0f, 10.0f, 10.0f));
-    //lightColors.push_back(glm::vec3(9.60, 7.01, 3.80));
-    //lightColors.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+    lightColors.push_back(glm::vec3(9.60, 7.01, 3.80));
+    lightColors.push_back(glm::vec3(0.0f, 5.0f, 0.0f));
 
 
     // Bloom and Blur shaders configuration
@@ -370,6 +371,14 @@ int main()
         shader.use();
         shader.setMat4("projection", projection);
         shader.setMat4("view", view);
+
+        // set lighting uniforms
+        for (unsigned int i = 0; i < lightPositions.size(); i++)
+        {
+            shader.setVec3("lights[" + std::to_string(i) + "].Position", lightPositions[i]);
+            shader.setVec3("lights[" + std::to_string(i) + "].Color", lightColors[i]);
+        }
+        shader.setVec3("viewPos", camera.Position);
         
         model = glm::mat4(1);
         //model = glm::translate(model, glm::vec3(movX, movY, movZ));
