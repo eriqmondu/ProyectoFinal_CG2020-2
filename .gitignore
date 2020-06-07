@@ -1,6 +1,7 @@
 # ignore this type of files #
 #############################
 
+
 *.exe
 *.pdb
 *.ilk
