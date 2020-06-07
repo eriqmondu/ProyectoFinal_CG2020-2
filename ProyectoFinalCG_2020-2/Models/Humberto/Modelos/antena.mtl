@@ -1,0 +1,15 @@
+# Blender MTL File: 'edificio07.blend'
+# Material Count: 1
+
+newmtl Material.021
+Ns 37.254904
+Ka 1.000000 1.000000 1.000000
+Kd 0.302439 0.302439 0.302439
+Ks 0.709150 0.709150 0.709150
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump Texturas\\Satellite_dish_NOR2.png
+map_Kd Texturas\\REF 1.jpg
+map_Ks Texturas\\Satellite_dish_Col.png

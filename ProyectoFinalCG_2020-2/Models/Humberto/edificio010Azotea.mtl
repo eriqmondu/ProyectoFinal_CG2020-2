@@ -1,0 +1,60 @@
+# Blender MTL File: 'edificio010.blend'
+# Material Count: 5
+
+newmtl Material.021
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Modelos\\Texturas\\anuncio.png
+
+newmtl Material.022
+Ns 37.254904
+Ka 1.000000 1.000000 1.000000
+Kd 0.302439 0.302439 0.302439
+Ks 0.709150 0.709150 0.709150
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump Modelos\\Texturas\\Satellite_dish_NOR2.png
+map_Kd Modelos\\Texturas\\REF 1.jpg
+map_Ks Modelos\\Texturas\\Satellite_dish_Col.png
+
+newmtl Material.023
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Modelos\\Texturas\\Ventilation1.png
+
+newmtl duct
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Modelos\\Texturas\\TextPanel2.png
+
+newmtl tex_lpgtank_d
+Ns 752.599996
+Ka 1.000000 1.000000 1.000000
+Kd 0.878000 0.878000 0.878000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Modelos\\Texturas\\tex_lpgtank_d.png
+map_Ks Modelos\\Texturas\\tex_lpgtank_s.png
