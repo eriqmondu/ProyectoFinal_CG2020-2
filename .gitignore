@@ -1,0 +1,18 @@
+# ignore this type of files #
+#############################
+
+*.exe
+*.pdb
+*.ilk
+*.ipch
+*.tlog
+*.idb
+*.log
+*.suo
+*.db
+*.iobj
+*.ipdb
+*.opendb
+*.shm
+*.db-wal
+*.db-shm
