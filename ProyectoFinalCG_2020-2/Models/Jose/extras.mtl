@@ -122,7 +122,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texture\\TextPanel1.png
+map_Kd textures\\TextPanel1.png
 
 newmtl Material_TextPanel2.png.003
 Ns 96.078443
@@ -133,7 +133,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd texture\\TextPanel2.png
+map_Kd textures\\TextPanel2.png
 
 newmtl None.005
 Ns 0.000000
@@ -144,7 +144,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd texture\\Ventilation1.png
+map_Kd textures\\Ventilation1.png
 
 newmtl None_Ventilation2.png
 Ns 0.000000
@@ -155,7 +155,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd texture\\Ventilation2.png
+map_Kd textures\\Ventilation2.png
 
 newmtl tex_lpgtank_d.001
 Ns 752.599996
@@ -166,5 +166,5 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd texture\\tex_lpgtank_d.png
-map_Ks texture\\tex_lpgtank_s.png
+map_Kd textures\\tex_lpgtank_d.png
+map_Ks textures\\tex_lpgtank_s.png
