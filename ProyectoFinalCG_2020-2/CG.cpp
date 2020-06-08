@@ -25,7 +25,7 @@ void processInput(GLFWwindow* window);
 unsigned int loadTexture(const char* path, bool gammaCorrection);
 void renderQuad();
 void renderCube();
-
+void inputKeyframes(GLFWwindow* window);
 
 
 const unsigned int SCR_WIDTH = 800;
@@ -39,7 +39,12 @@ float exposure = 1.0f;
 bool keys[1024];
 
 // Initial camera location
-Camera camera(glm::vec3(0.0f, 5.0f, 5.0f));
+glm::vec3 posCam(2.0f, 4.75f, 0.1f);
+Camera camera(posCam);
+
+//Animation flags
+float reproduciranimacion, habilitaranimacion;
+
 float lastX = (float)SCR_WIDTH / 2.0;
 float lastY = (float)SCR_HEIGHT / 2.0;
 bool firstMouse = true;
@@ -53,6 +58,85 @@ float elapsedTime = 0.0f;
 // Other variables
 float movX, movY, movZ;
 float movX2, movY2, movZ2;
+
+///////////////////////////////KEYFRAMES/////////////////////
+bool animacion = false;
+
+//NEW// Keyframes
+float posXcam = posCam.x, posYcam = posCam.y, posZcam = posCam.z;
+float	movCam_x = 0.0f, movCam_y = 0.0f, movCam_z = 0.0f;
+
+#define MAX_FRAMES 30		//Max number of keyframes
+int i_max_steps = 90;
+int i_curr_steps = 23;      //Frames between keyframes
+typedef struct _frame
+{
+    //Variables to save Key Frames
+    float movCam_x;		//Variable to PositionX
+    float movCam_y;		//Variable to PositionY
+    float movCam_z;		//Variable to PositionZ
+    float movCam_xInc;		//Variable to IncrementX
+    float movCam_yInc;		//Variable to IncrementY
+    float movCam_zInc;		//Variable to IncrementZ
+}FRAME;
+
+FRAME KeyFrame[MAX_FRAMES];
+int FrameIndex = 23;			//introducir datos
+bool play = false;
+int playIndex = 0;
+
+void resetElements(void)
+{
+    movCam_x = KeyFrame[0].movCam_x;
+    movCam_y = KeyFrame[0].movCam_y;
+    movCam_z = KeyFrame[0].movCam_z;
+}
+
+void interpolation(void)
+{
+    KeyFrame[playIndex].movCam_xInc = (KeyFrame[playIndex + 1].movCam_x - KeyFrame[playIndex].movCam_x) / i_max_steps;
+    KeyFrame[playIndex].movCam_yInc = (KeyFrame[playIndex + 1].movCam_y - KeyFrame[playIndex].movCam_y) / i_max_steps;
+    KeyFrame[playIndex].movCam_zInc = (KeyFrame[playIndex + 1].movCam_z - KeyFrame[playIndex].movCam_z) / i_max_steps;
+}
+
+
+void animate(void)
+{
+    //Object movement
+    if (play)
+    {
+        if (i_curr_steps >= i_max_steps) //end of animation between frames?
+        {
+            playIndex++;
+            printf("playindex : %d\n", playIndex);
+            if (playIndex > FrameIndex - 2)	//end of total animation?
+            {
+                printf("Frame index= %d\n", FrameIndex);
+                printf("termina anim\n");
+                playIndex = 0;
+                play = false;
+            }
+            else //Next frame interpolations
+            {
+                //printf("entro aquí\n");
+                i_curr_steps = 0; //Reset counter
+                //Interpolation
+                interpolation();
+            }
+        }
+        else
+        {
+            //printf("se quedó aqui\n");
+            //printf("max steps: %f", i_max_steps);
+            //Draw animation
+            movCam_x += KeyFrame[playIndex].movCam_xInc;
+            movCam_y += KeyFrame[playIndex].movCam_yInc;
+            movCam_z += KeyFrame[playIndex].movCam_zInc;
+            i_curr_steps++;
+        }
+    }
+}
+/* FIN KEYFRAMES*/
 
 int main()
 {
@@ -298,6 +382,40 @@ int main()
     shaderBloomFinal.setInt("scene", 0);
     shaderBloomFinal.setInt("bloomBlur", 1);
 
+    //Initial Keyframes to camera
+    KeyFrame[0].movCam_x = 0.0f;			//Ciclo 1 ida
+    KeyFrame[0].movCam_y = 0.0f;
+    KeyFrame[0].movCam_z = 0.0f;
+
+
+    KeyFrame[1].movCam_x = -0.25;
+    KeyFrame[1].movCam_y = 0.0;
+    KeyFrame[1].movCam_z = 0.5;
+
+    KeyFrame[2].movCam_x = -0.25;
+    KeyFrame[2].movCam_y = 0.0f;
+    KeyFrame[2].movCam_z = 0.5f;
+
+    KeyFrame[3].movCam_x = -1.0f;
+    KeyFrame[3].movCam_y = -0.25f;
+    KeyFrame[3].movCam_z = 0.5f;
+
+    KeyFrame[4].movCam_x = -1.5f;
+    KeyFrame[4].movCam_y = -0.5f;
+    KeyFrame[4].movCam_z = 0.5f;
+
+    KeyFrame[5].movCam_x = -1.8f;
+    KeyFrame[5].movCam_y = -0.8f;
+    KeyFrame[5].movCam_z = 0.5f;
+
+    KeyFrame[6].movCam_x = -2.0f;
+    KeyFrame[6].movCam_y = -1.0f;
+    KeyFrame[6].movCam_z = 0.1f;
+
+    KeyFrame[7].movCam_x = -2.5f;
+    KeyFrame[7].movCam_y = -1.2f;
+    KeyFrame[7].movCam_z = 0.0f;
+
     // Render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -331,6 +449,11 @@ int main()
         // input
         // -----
         processInput(window);
+
+        //For keyframes
+        inputKeyframes(window);
+        animate();
+        camera.animateCam(posXcam + movCam_x, posYcam + movCam_y, posZcam + movCam_z);
 
         // Render scene
         // ------
@@ -677,7 +800,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     lastX = xpos;
     lastY = ypos;
 
-    camera.ProcessMouseMovement(xoffset, yoffset);
+    //camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
@@ -733,4 +856,38 @@ unsigned int loadTexture(char const* path, bool gammaCorrection)
     }
 
     return textureID;
+}
+
+//////Function to enable keyframes animation
+void inputKeyframes(GLFWwindow* window)
+{
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+    {
+        if (reproduciranimacion < 1)
+        {
+            if (play == false && (FrameIndex > 1))
+            {
+                resetElements();
+                //First Interpolation				
+                interpolation();
+                play = true;
+                playIndex = 0;
+                i_curr_steps = 0;
+                reproduciranimacion++;
+                printf("presiona 0 para habilitar reproducir de nuevo la animación'\n");
+                habilitaranimacion = 0;
+            }
+            else
+            {
+                play = false;
+            }
+        }
+    }
+    if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
+    {
+        if (habilitaranimacion < 1)
+        {
+            reproduciranimacion = 0;
+        }
+    }
 }
