@@ -28,8 +28,8 @@ void renderCube();
 void inputKeyframes(GLFWwindow* window);
 
 
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 400;
+const unsigned int SCR_HEIGHT = 300;
 
 // Bloom effect switch
 bool bloom = true;
@@ -453,7 +453,7 @@ int main()
         //For keyframes
         inputKeyframes(window);
         animate();
-        camera.animateCam(posXcam + movCam_x, posYcam + movCam_y, posZcam + movCam_z);
+        //camera.animateCam(posXcam + movCam_x, posYcam + movCam_y, posZcam + movCam_z);
 
         // Render scene
         // ------
@@ -800,7 +800,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     lastX = xpos;
     lastY = ypos;
 
-    //camera.ProcessMouseMovement(xoffset, yoffset);
+    camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
