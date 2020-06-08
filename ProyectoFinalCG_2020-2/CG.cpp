@@ -27,8 +27,8 @@ void renderQuad();
 void renderCube();
 
 // Window Size
-const unsigned int SCR_WIDTH = 640;
-const unsigned int SCR_HEIGHT = 480;
+const unsigned int SCR_WIDTH = 512;
+const unsigned int SCR_HEIGHT = 284;
 
 // Bloom effect switch
 bool bloom = true;
