@@ -1,5 +1,5 @@
 # Blender MTL File: 'Ciudad_final.blend'
-# Material Count: 57
+# Material Count: 87
 
 newmtl 0012
 Ns 225.000000
@@ -117,6 +117,17 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+
+newmtl Material
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Sandra\\Rust_metal.jpg
 
 newmtl Material.001
 Ns 225.000000
@@ -431,6 +442,50 @@ d 1.000000
 illum 2
 map_Kd Jose\\textures\\tinaco.jpg
 
+newmtl Material.033
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Sandra\\TextPanel2.png
+
+newmtl Material.034
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Sandra\\Rust_metal.jpg
+
+newmtl Material.035
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Sandra\\Rust_metal.jpg
+
+newmtl Material.036
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Sandra\\rotoplas.png
+
 newmtl Material.037
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
@@ -441,6 +496,151 @@ Ni 1.450000
 d 1.000000
 illum 2
 map_Kd Ciudad\\Ciudad\\Detallados\\07.jpg
+
+newmtl Material.038
+Ns 96.078443
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Jose\\textures\\TextMetal1.png
+
+newmtl Material.039
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Jose\\textures\\images (Pequeño).jpg
+
+newmtl Material.040
+Ns 37.254904
+Ka 1.000000 1.000000 1.000000
+Kd 0.302439 0.302439 0.302439
+Ks 0.709150 0.709150 0.709150
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump Jose\\textures\\Satellite_dish_NOR2.png
+map_Kd Jose\\textures\\REF 1.jpg
+map_Ks Jose\\textures\\Satellite_dish_Col.png
+
+newmtl Material.041
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.267031 0.800000 0.339660
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Jose\\textures\\background-168229_960_720.jpg
+
+newmtl Material.042
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.729787 0.699844
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Jose\\textures\\tinaco.jpg
+
+newmtl Material.043
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Sandra\\TextPanel1.png
+
+newmtl Material.044
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Sandra\\Rust_metal.jpg
+
+newmtl Material.045
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Sandra\\Rust_metal.jpg
+
+newmtl Material.046
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Sandra\\TextPanel2.png
+
+newmtl Material.049
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Jose\\textures\\rotoplas.png
+
+newmtl Material.054
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Jose\\textures\\TextPanel1.png
+
+newmtl Material.057
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Jose\\textures\\1366_2000.jpg
+
+newmtl Material.058
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Jose\\textures\\primer-viztazo-a-batman-pinguino.jpg
 
 newmtl Material001
 Ns 225.000000
@@ -530,6 +730,39 @@ d 1.000000
 illum 2
 map_Kd Ciudad\\Ciudad\\Secundarios\\01.jpg
 
+newmtl Material_Prueba1.png
+Ns 96.078443
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\\Prueba1.png
+
+newmtl Material_TextPanel1.png.004
+Ns 96.078443
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Jose\\textures\\TextPanel1.png
+
+newmtl Material_TextPanel2.png.003
+Ns 96.078443
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Jose\\textures\\TextPanel2.png
+
 newmtl Material__0.001
 Ns 10.000002
 Ka 1.000000 1.000000 1.000000
@@ -540,6 +773,17 @@ Ni 1.500000
 d 1.000000
 illum 1
 map_Kd David\\Texturas\\texture.jpg
+
+newmtl Material__25.001
+Ns 10.000002
+Ka 1.000000 1.000000 1.000000
+Kd 0.588000 0.588000 0.588000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd Sandra\\escalera.png
 
 newmtl Metal.001
 Ns 225.000000
@@ -585,6 +829,83 @@ d 1.000000
 illum 2
 map_Kd David\\Texturas\\Madera.jpg
 
+newmtl None.002
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Sandra\\Ventilation1_SPECULAR.png
+
+newmtl None.003
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Sandra\\Rust_metal.jpg
+
+newmtl None.004
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Sandra\\Ventilation1.png
+
+newmtl None.005
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Jose\\textures\\Ventilation1.png
+
+newmtl None.006
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Sandra\\TextPanel1.png
+
+newmtl None_Ventilation2.png
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Jose\\textures\\Ventilation2.png
+
+newmtl None_Ventilation2.png.001
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Sandra\\Ventilation2.png
+
 newmtl duct
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
@@ -618,6 +939,18 @@ d 1.000000
 illum 2
 map_Kd Humberto\\Modelos\\Texturas\\tex_lpgtank_d.png
 map_Ks Humberto\\Modelos\\Texturas\\tex_lpgtank_s.png
+
+newmtl tex_lpgtank_d.001
+Ns 752.599996
+Ka 1.000000 1.000000 1.000000
+Kd 0.878000 0.878000 0.878000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd Jose\\textures\\tex_lpgtank_d.png
+map_Ks Jose\\textures\\tex_lpgtank_s.png
 
 newmtl ventilador
 Ns 225.000000
