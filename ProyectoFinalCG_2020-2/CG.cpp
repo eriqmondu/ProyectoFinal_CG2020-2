@@ -27,8 +27,13 @@ void renderQuad();
 void renderCube();
 
 // Window Size
+<<<<<<< HEAD
 const unsigned int SCR_WIDTH = 512;
 const unsigned int SCR_HEIGHT = 284;
+=======
+const unsigned int SCR_WIDTH = 800;
+const unsigned int SCR_HEIGHT = 600;
+>>>>>>> b8ebf8f6df4afbba26c54ae8fd58eec61ddabd2f
 
 // Bloom effect switch
 bool bloom = true;
@@ -118,13 +123,21 @@ int main()
     // OBJ model loading
     // -----------------
     std::cout << "Loading OBJ Models..." << std::endl;
+<<<<<<< HEAD
     Model edificio((char*)"Models/Ciudad_final.obj");
+=======
+    Model edificio((char*)"Models/ciudad.obj");
+>>>>>>> b8ebf8f6df4afbba26c54ae8fd58eec61ddabd2f
     Model mujer((char*)"Models/batmanTexturizado.obj");
 
     // FBX model loading
     // -----------------
     std::cout << "Loading FBX Models..." << std::endl;
+<<<<<<< HEAD
     ModelAnim batman("Models/Batman_test.fbx");
+=======
+    ModelAnim batman("Models/batman.fbx");
+>>>>>>> b8ebf8f6df4afbba26c54ae8fd58eec61ddabd2f
 
 
     // Initial bones transformation
@@ -354,7 +367,11 @@ int main()
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
         model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+<<<<<<< HEAD
         model = glm::scale(model, glm::vec3(0.001f, 0.001f, 0.001f));	// it's a bit too big for our scene, so scale it down
+=======
+        model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));	// it's a bit too big for our scene, so scale it down
+>>>>>>> b8ebf8f6df4afbba26c54ae8fd58eec61ddabd2f
         ourShader.setMat4("model", model);
 
         ourShader.setMat4("gBones", MAX_RIGGING_BONES, gBones);
@@ -372,7 +389,11 @@ int main()
         shader.setMat4("projection", projection);
         shader.setMat4("view", view);
 
+<<<<<<< HEAD
         // Set lighting uniforms
+=======
+        // set lighting uniforms
+>>>>>>> b8ebf8f6df4afbba26c54ae8fd58eec61ddabd2f
         for (unsigned int i = 0; i < lightPositions.size(); i++)
         {
             shader.setVec3("lights[" + std::to_string(i) + "].Position", lightPositions[i]);

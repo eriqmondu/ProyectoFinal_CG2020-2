@@ -10,6 +10,10 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+<<<<<<< HEAD
+=======
+map_Bump textures\\Satellite_dish_NOR2.png
+>>>>>>> b8ebf8f6df4afbba26c54ae8fd58eec61ddabd2f
 map_Kd textures\\REF 1.jpg
 map_Ks textures\\Satellite_dish_Col.png
 
@@ -33,7 +37,11 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+<<<<<<< HEAD
 map_Kd textures\\images.jpg
+=======
+map_Kd textures\\images (Pequeño).jpg
+>>>>>>> b8ebf8f6df4afbba26c54ae8fd58eec61ddabd2f
 
 newmtl Material.024
 Ns 225.000000
