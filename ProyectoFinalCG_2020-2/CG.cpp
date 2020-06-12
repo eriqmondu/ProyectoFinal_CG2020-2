@@ -28,8 +28,8 @@ void renderCube();
 void inputKeyframes(GLFWwindow* window);
 
 
-const unsigned int SCR_WIDTH = 400;
-const unsigned int SCR_HEIGHT = 300;
+const unsigned int SCR_WIDTH = 1024;
+const unsigned int SCR_HEIGHT = 600;
 
 // Bloom effect switch
 bool bloom = true;
@@ -229,14 +229,14 @@ int main()
     // ---------------------------
     std::cout << "Loading Skybox faces..." << std::endl;
     vector<const GLchar*> faces;
-    faces.push_back("SkyBox/beach/posx.jpg");
-    faces.push_back("SkyBox/beach/negx.jpg");
+    faces.push_back("SkyBox/sky/right.jpg");
+    faces.push_back("SkyBox/sky/left.jpg");
 
-    faces.push_back("SkyBox/beach/posy.jpg");
-    faces.push_back("SkyBox/beach/negy.jpg");
+    faces.push_back("SkyBox/sky/up.jpg");
+    faces.push_back("SkyBox/sky/bottom.jpg");
 
-    faces.push_back("SkyBox/beach/posz.jpg");
-    faces.push_back("SkyBox/beach/negz.jpg");
+    faces.push_back("SkyBox/sky/front.jpg");
+    faces.push_back("SkyBox/sky/back.jpg");
 
     // Loading all the faces to the cube
     // -----------------------------
@@ -362,14 +362,14 @@ int main()
     // Positions (only if static, otherwise insert lightPositions inside the render loop)
     std::vector<glm::vec3> lightPositions;
     lightPositions.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
-    lightPositions.push_back(glm::vec3(0.0f, 5.0f, 0.0f));
-    lightPositions.push_back(glm::vec3(0.0f, 5.0f, 3.0f));
+    //lightPositions.push_back(glm::vec3(0.0f, 5.0f, 0.0f));
+    //lightPositions.push_back(glm::vec3(0.0f, 5.0f, 3.0f));
 
     // Colors (only if static, otherwise insert lightColors inside the render loop)
     std::vector<glm::vec3> lightColors;
-    lightColors.push_back(glm::vec3(10.0f, 10.0f, 10.0f));
-    lightColors.push_back(glm::vec3(9.60, 7.01, 3.80));
-    lightColors.push_back(glm::vec3(0.0f, 5.0f, 0.0f));
+    lightColors.push_back(glm::vec3(20.0f, 20.0f, 20.0f));
+    //lightColors.push_back(glm::vec3(9.60, 7.01, 3.80));
+    //lightColors.push_back(glm::vec3(0.0f, 5.0f, 0.0f));
 
 
     // Bloom and Blur shaders configuration
@@ -538,7 +538,7 @@ int main()
             model = glm::scale(model, glm::vec3(0.25f));
             shaderLight.setMat4("model", model);
             shaderLight.setVec3("lightColor", lightColors[i]);
-            renderCube();
+            //renderCube();
         }
 
         // Draw the Skybox
@@ -563,7 +563,7 @@ int main()
         // 2. blur bright fragments with two-pass Gaussian Blur 
         // --------------------------------------------------
         bool horizontal = true, first_iteration = true;
-        unsigned int amount = 5;
+        unsigned int amount = 10;
         shaderBlur.use();
         for (unsigned int i = 0; i < amount; i++)
         {
