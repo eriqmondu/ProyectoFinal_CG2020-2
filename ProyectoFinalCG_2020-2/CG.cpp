@@ -167,7 +167,7 @@ int main()
     glfwSetScrollCallback(window, scroll_callback);
 
     // Tell GLFW to capture our mouse
-    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
@@ -361,14 +361,14 @@ int main()
 
     // Positions (only if static, otherwise insert lightPositions inside the render loop)
     std::vector<glm::vec3> lightPositions;
-    lightPositions.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+    //lightPositions.push_back(glm::vec3(0.0f, 2.0f, 0.0f));
     //lightPositions.push_back(glm::vec3(0.0f, 5.0f, 0.0f));
     //lightPositions.push_back(glm::vec3(0.0f, 5.0f, 3.0f));
 
     // Colors (only if static, otherwise insert lightColors inside the render loop)
     std::vector<glm::vec3> lightColors;
-    lightColors.push_back(glm::vec3(20.0f, 20.0f, 20.0f));
-    //lightColors.push_back(glm::vec3(9.60, 7.01, 3.80));
+    lightColors.push_back(glm::vec3(10.0f, 10.0f, 10.0f));
+    lightColors.push_back(glm::vec3(54.9f, 31.2f, 20.8f));
     //lightColors.push_back(glm::vec3(0.0f, 5.0f, 0.0f));
 
 
@@ -425,8 +425,8 @@ int main()
 
         // Interactive light positions
         std::vector<glm::vec3> lightPositions;
-        lightPositions.push_back(glm::vec3(movX2, movY2, movZ2));
-        //lightPositions.push_back(glm::vec3(movX, movY, movZ));
+        lightPositions.push_back(glm::vec3(0.0, 5.0, 0.0));
+        lightPositions.push_back(glm::vec3(sin(glfwGetTime()), -1.0f, -sin(glfwGetTime())));
 
 
         // Per-frame time logic
@@ -538,7 +538,7 @@ int main()
             model = glm::scale(model, glm::vec3(0.25f));
             shaderLight.setMat4("model", model);
             shaderLight.setVec3("lightColor", lightColors[i]);
-            //renderCube();
+            renderCube();
         }
 
         // Draw the Skybox
@@ -563,7 +563,7 @@ int main()
         // 2. blur bright fragments with two-pass Gaussian Blur 
         // --------------------------------------------------
         bool horizontal = true, first_iteration = true;
-        unsigned int amount = 10;
+        unsigned int amount = 15;
         shaderBlur.use();
         for (unsigned int i = 0; i < amount; i++)
         {
