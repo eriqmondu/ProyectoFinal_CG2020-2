@@ -211,7 +211,7 @@ int main()
     std::cout << "Loading FBX Models..." << std::endl;
     ModelAnim batman("Models/Batman_test.fbx");
 
-
+    
 
     // Initial bones transformation
     // -----------------------------
@@ -421,11 +421,11 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         // Just a noob debug var here 
-        printf("X= %0.2f Y= %0.2f, Z= %0.2f\n", movX, movY, movZ);
+        printf("X= %0.2f Y= %0.2f, Z= %0.2f\n", movX2, movY2, movZ2);
 
         // Interactive light positions
         std::vector<glm::vec3> lightPositions;
-        lightPositions.push_back(glm::vec3(0.0, 5.0, 0.0));
+        lightPositions.push_back(glm::vec3(0.80f, 4.8f, 0.8f));
         lightPositions.push_back(glm::vec3(sin(glfwGetTime()), -1.0f, -sin(glfwGetTime())));
 
 
@@ -538,7 +538,7 @@ int main()
             model = glm::scale(model, glm::vec3(0.25f));
             shaderLight.setMat4("model", model);
             shaderLight.setVec3("lightColor", lightColors[i]);
-            renderCube();
+            //renderCube();
         }
 
         // Draw the Skybox

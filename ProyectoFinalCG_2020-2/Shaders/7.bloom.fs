@@ -40,7 +40,7 @@ void main()
     }
     vec3 result = ambient + lighting;
     // check whether result is higher than some threshold, if so, output as bloom threshold color
-    float brightness = dot(result, vec3(0.2126, 0.7152, 0.0722));
+    float brightness = dot(result, vec3(0.9126, 0.7152, 0.0722));
     //if(brightness > 1.0)
         BrightColor = vec4(result, 1.0);
     //else
