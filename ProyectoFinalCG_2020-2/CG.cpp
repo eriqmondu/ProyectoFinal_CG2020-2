@@ -28,8 +28,8 @@ void renderCube();
 void inputKeyframes(GLFWwindow* window);
 
 
-const unsigned int SCR_WIDTH = 1024;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 512;
+const unsigned int SCR_HEIGHT = 384;
 
 // Bloom effect switch
 bool bloom = true;
@@ -148,7 +148,7 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_SAMPLES, 4);
+    glfwWindowHint(GLFW_SAMPLES, 8);
 
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -427,7 +427,7 @@ int main()
 
         // Interactive light positions
         std::vector<glm::vec3> lightPositions;
-        lightPositions.push_back(glm::vec3(0.40f, 5.00f, -0.40f));
+        lightPositions.push_back(glm::vec3(0.40f, 4.00f, -0.40f));
         //lightPositions.push_back(glm::vec3(0.80f, 4.8f, 0.8f));
         lightPositions.push_back(glm::vec3(sin(glfwGetTime()/2)*3, -1.0f, -sin(glfwGetTime()/2)*3));
         //lightPositions.push_back(glm::vec3(movX2, movY2, movZ2));
@@ -737,7 +737,7 @@ void processInput(GLFWwindow* window)
         movY += 0.1f;
     if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
         //movY -= 0.1f;
-        animationCount = 100;
+        animationCount = 1250;
     if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
         movZ -= 0.1;
     if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
