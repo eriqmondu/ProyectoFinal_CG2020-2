@@ -49,6 +49,8 @@ float lastX = (float)SCR_WIDTH / 2.0;
 float lastY = (float)SCR_HEIGHT / 2.0;
 bool firstMouse = true;
 
+int animationCount = 0;
+
 // Timing
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -222,7 +224,7 @@ int main()
     float fps = (float)batman.getFramerate();
     int keys = (int)batman.getNumFrames();
 
-    int animationCount = 0;
+    //int animationCount = 0;
 
 
     // Skybox texture face loading
@@ -367,7 +369,7 @@ int main()
 
     // Colors (only if static, otherwise insert lightColors inside the render loop)
     std::vector<glm::vec3> lightColors;
-    lightColors.push_back(glm::vec3(10.0f, 10.0f, 10.0f));
+    lightColors.push_back(glm::vec3(15.0, 15.0, 15.0));
     lightColors.push_back(glm::vec3(54.9f, 31.2f, 20.8f));
     //lightColors.push_back(glm::vec3(0.0f, 5.0f, 0.0f));
 
@@ -421,12 +423,14 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         // Just a noob debug var here 
-        printf("X= %0.2f Y= %0.2f, Z= %0.2f\n", movX2, movY2, movZ2);
+        //printf("X= %0.2f Y= %0.2f, Z= %0.2f\n", movX2, movY2, movZ2);
 
         // Interactive light positions
         std::vector<glm::vec3> lightPositions;
-        lightPositions.push_back(glm::vec3(0.80f, 4.8f, 0.8f));
-        lightPositions.push_back(glm::vec3(sin(glfwGetTime()), -1.0f, -sin(glfwGetTime())));
+        lightPositions.push_back(glm::vec3(0.40f, 5.00f, -0.40f));
+        //lightPositions.push_back(glm::vec3(0.80f, 4.8f, 0.8f));
+        lightPositions.push_back(glm::vec3(sin(glfwGetTime()/2)*3, -1.0f, -sin(glfwGetTime()/2)*3));
+        //lightPositions.push_back(glm::vec3(movX2, movY2, movZ2));
 
 
         // Per-frame time logic
@@ -563,7 +567,7 @@ int main()
         // 2. blur bright fragments with two-pass Gaussian Blur 
         // --------------------------------------------------
         bool horizontal = true, first_iteration = true;
-        unsigned int amount = 15;
+        unsigned int amount = 10;
         shaderBlur.use();
         for (unsigned int i = 0; i < amount; i++)
         {
@@ -732,7 +736,8 @@ void processInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
         movY += 0.1f;
     if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
-        movY -= 0.1f;
+        //movY -= 0.1f;
+        animationCount = 100;
     if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
         movZ -= 0.1;
     if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
@@ -799,6 +804,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 
     lastX = xpos;
     lastY = ypos;
+
 
     camera.ProcessMouseMovement(xoffset, yoffset);
 }
