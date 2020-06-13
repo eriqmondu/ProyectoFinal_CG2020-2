@@ -71,6 +71,23 @@ public:
         return this->Position;
     }
 
+    float GetYaw() {
+        return this->Yaw;
+    }
+
+    float GetPitch() {
+        return this->Pitch;
+    }
+
+    void changeScene(float movX, float movY, float movZ, float yaw, float pitch) {
+        Position.x = movX;
+        Position.y = movY;
+        Position.z = movZ;
+        Yaw = yaw;
+        Pitch = pitch;
+        updateCameraVectors();
+    }
+
     //Process to move camera with input positions
     void animateCam(float movX, float movY, float movZ) {
         Position.x = movX;

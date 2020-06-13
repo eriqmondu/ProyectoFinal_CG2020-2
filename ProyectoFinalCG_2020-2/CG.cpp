@@ -28,8 +28,8 @@ void renderCube();
 void inputKeyframes(GLFWwindow* window);
 
 
-const unsigned int SCR_WIDTH = 512;
-const unsigned int SCR_HEIGHT = 384;
+const unsigned int SCR_WIDTH = 1024;
+const unsigned int SCR_HEIGHT = 600;
 
 // Bloom effect switch
 bool bloom = true;
@@ -38,8 +38,13 @@ float exposure = 1.0f;
 
 bool keys[1024];
 
+//Initial Scene camera
+Camera cameraScene(2.8636f, 5.2606f, -1.9636f, 0.0f, 1.0f, 0.0f, 93.7998, -26.50);
+bool camScen = false;
+int cam = 0;
+
 // Initial camera location
-glm::vec3 posCam(2.0f, 4.75f, 0.1f);
+glm::vec3 posCam(3.3f, 5.5f, 1.8f);
 Camera camera(posCam);
 
 //Animation flags
@@ -66,24 +71,24 @@ bool animacion = false;
 
 //NEW// Keyframes
 float posXcam = posCam.x, posYcam = posCam.y, posZcam = posCam.z;
-float	movCam_x = 0.0f, movCam_y = 0.0f, movCam_z = 0.0f;
+float   movCam_x = 0.0f, movCam_y = 0.0f, movCam_z = 0.0f;
 
-#define MAX_FRAMES 30		//Max number of keyframes
+#define MAX_FRAMES 60       //Max number of keyframes
 int i_max_steps = 90;
 int i_curr_steps = 23;      //Frames between keyframes
 typedef struct _frame
 {
     //Variables to save Key Frames
-    float movCam_x;		//Variable to PositionX
-    float movCam_y;		//Variable to PositionY
-    float movCam_z;		//Variable to PositionZ
-    float movCam_xInc;		//Variable to IncrementX
-    float movCam_yInc;		//Variable to IncrementY
-    float movCam_zInc;		//Variable to IncrementZ
+    float movCam_x;     //Variable to PositionX
+    float movCam_y;     //Variable to PositionY
+    float movCam_z;     //Variable to PositionZ
+    float movCam_xInc;      //Variable to IncrementX
+    float movCam_yInc;      //Variable to IncrementY
+    float movCam_zInc;      //Variable to IncrementZ
 }FRAME;
 
 FRAME KeyFrame[MAX_FRAMES];
-int FrameIndex = 23;			//introducir datos
+int FrameIndex = 60;            //introducir datos
 bool play = false;
 int playIndex = 0;
 
@@ -92,6 +97,8 @@ void resetElements(void)
     movCam_x = KeyFrame[0].movCam_x;
     movCam_y = KeyFrame[0].movCam_y;
     movCam_z = KeyFrame[0].movCam_z;
+    animationCount = 0;
+    cameraScene.changeScene(2.8636f, 5.2608f, -1.9636f, 93.7998f, -26.50);
 }
 
 void interpolation(void)
@@ -111,7 +118,7 @@ void animate(void)
         {
             playIndex++;
             printf("playindex : %d\n", playIndex);
-            if (playIndex > FrameIndex - 2)	//end of total animation?
+            if (playIndex > FrameIndex - 2) //end of total animation?
             {
                 printf("Frame index= %d\n", FrameIndex);
                 printf("termina anim\n");
@@ -198,7 +205,7 @@ int main()
     // Animated skinning FBX shader (thanks Sergio Vite!)
     // --------------------------------------------------
     ShaderAnim ourShader("Shaders/vertex_skinning.vs", "Shaders/fragment_skinning.fs");
-    #define MAX_RIGGING_BONES 100
+#define MAX_RIGGING_BONES 100
     ourShader.setBonesIDs(MAX_RIGGING_BONES);
 
 
@@ -213,7 +220,7 @@ int main()
     std::cout << "Loading FBX Models..." << std::endl;
     ModelAnim batman("Models/Batman_test.fbx");
 
-    
+
 
     // Initial bones transformation
     // -----------------------------
@@ -385,38 +392,233 @@ int main()
     shaderBloomFinal.setInt("bloomBlur", 1);
 
     //Initial Keyframes to camera
-    KeyFrame[0].movCam_x = 0.0f;			//Ciclo 1 ida
+    KeyFrame[0].movCam_x = 0.0f;            //Recorrido primer edificio
     KeyFrame[0].movCam_y = 0.0f;
     KeyFrame[0].movCam_z = 0.0f;
 
-
-    KeyFrame[1].movCam_x = -0.25;
+    KeyFrame[1].movCam_x = -0.15;
     KeyFrame[1].movCam_y = 0.0;
-    KeyFrame[1].movCam_z = 0.5;
+    KeyFrame[1].movCam_z = -1.0;
 
-    KeyFrame[2].movCam_x = -0.25;
+    KeyFrame[2].movCam_x = -0.15;
     KeyFrame[2].movCam_y = 0.0f;
-    KeyFrame[2].movCam_z = 0.5f;
+    KeyFrame[2].movCam_z = -1.6f;
 
-    KeyFrame[3].movCam_x = -1.0f;
-    KeyFrame[3].movCam_y = -0.25f;
-    KeyFrame[3].movCam_z = 0.5f;
+    KeyFrame[3].movCam_x = -0.15f;
+    KeyFrame[3].movCam_y = 0.0f;
+    KeyFrame[3].movCam_z = -2.0f;
 
-    KeyFrame[4].movCam_x = -1.5f;
-    KeyFrame[4].movCam_y = -0.5f;
-    KeyFrame[4].movCam_z = 0.5f;
+    KeyFrame[4].movCam_x = -0.35f;
+    KeyFrame[4].movCam_y = 0.0f;
+    KeyFrame[4].movCam_z = -2.6f;
 
-    KeyFrame[5].movCam_x = -1.8f;
-    KeyFrame[5].movCam_y = -0.8f;
-    KeyFrame[5].movCam_z = 0.5f;
+    KeyFrame[5].movCam_x = -0.35f;
+    KeyFrame[5].movCam_y = 0.0f;           //Movimientos sin cambio de posicion
+    KeyFrame[5].movCam_z = -2.6f;
 
-    KeyFrame[6].movCam_x = -2.0f;
-    KeyFrame[6].movCam_y = -1.0f;
-    KeyFrame[6].movCam_z = 0.1f;
+    KeyFrame[6].movCam_x = -0.4f;           //Primer salto
+    KeyFrame[6].movCam_y = 0.0f;
+    KeyFrame[6].movCam_z = -2.6f;
 
-    KeyFrame[7].movCam_x = -2.5f;
-    KeyFrame[7].movCam_y = -1.2f;
-    KeyFrame[7].movCam_z = 0.0f;
+    KeyFrame[7].movCam_x = -0.9f;
+    KeyFrame[7].movCam_y = -0.7f;
+    KeyFrame[7].movCam_z = -2.7f;
+
+    KeyFrame[8].movCam_x = -1.0f;
+    KeyFrame[8].movCam_y = -1.5f;
+    KeyFrame[8].movCam_z = -2.9;
+
+    KeyFrame[9].movCam_x = -1.2f;
+    KeyFrame[9].movCam_y = -1.75f;
+    KeyFrame[9].movCam_z = -3.0;
+
+    KeyFrame[10].movCam_x = -1.7f;
+    KeyFrame[10].movCam_y = -1.5f;
+    KeyFrame[10].movCam_z = -3.0;
+
+    KeyFrame[11].movCam_x = -1.7f;
+    KeyFrame[11].movCam_y = -1.5f;
+    KeyFrame[11].movCam_z = -3.4;
+
+    KeyFrame[12].movCam_x = -1.8f;
+    KeyFrame[12].movCam_y = -1.5f;
+    KeyFrame[12].movCam_z = -3.5;
+
+    KeyFrame[13].movCam_x = -2.0f;
+    KeyFrame[13].movCam_y = -1.6f;
+    KeyFrame[13].movCam_z = -3.5;
+
+    KeyFrame[14].movCam_x = -2.2f;
+    KeyFrame[14].movCam_y = -1.6f;
+    KeyFrame[14].movCam_z = -3.5;
+
+    KeyFrame[15].movCam_x = -2.4f;
+    KeyFrame[15].movCam_y = -1.85f;
+    KeyFrame[15].movCam_z = -3.0;
+
+    KeyFrame[16].movCam_x = -2.4f;
+    KeyFrame[16].movCam_y = -1.85f;
+    KeyFrame[16].movCam_z = -2.5;
+
+    KeyFrame[17].movCam_x = -2.7f;
+    KeyFrame[17].movCam_y = -1.7f;
+    KeyFrame[17].movCam_z = -2.0;
+
+    KeyFrame[18].movCam_x = -2.9f;
+    KeyFrame[18].movCam_y = -1.6f;
+    KeyFrame[18].movCam_z = -1.8;
+
+    KeyFrame[19].movCam_x = -3.2f;
+    KeyFrame[19].movCam_y = -1.6f;
+    KeyFrame[19].movCam_z = -1.7;
+
+    KeyFrame[20].movCam_x = -3.5f;
+    KeyFrame[20].movCam_y = -1.6f;
+    KeyFrame[20].movCam_z = -1.6;
+
+    KeyFrame[21].movCam_x = -3.9f;
+    KeyFrame[21].movCam_y = -1.6f;
+    KeyFrame[21].movCam_z = -1.5;
+
+    KeyFrame[22].movCam_x = -4.4f;
+    KeyFrame[22].movCam_y = -1.6f;
+    KeyFrame[22].movCam_z = -1.5;
+
+    KeyFrame[23].movCam_x = -4.7f;
+    KeyFrame[23].movCam_y = -1.6f;
+    KeyFrame[23].movCam_z = -1.7;
+
+    KeyFrame[24].movCam_x = -4.7f;
+    KeyFrame[24].movCam_y = -1.6f;
+    KeyFrame[24].movCam_z = -1.9;
+
+    KeyFrame[25].movCam_x = -4.7f;
+    KeyFrame[25].movCam_y = -1.4f;
+    KeyFrame[25].movCam_z = -2.3;
+
+    KeyFrame[26].movCam_x = -4.7f;
+    KeyFrame[26].movCam_y = -1.6f;
+    KeyFrame[26].movCam_z = -2.9;
+
+    KeyFrame[27].movCam_x = -4.5f;
+    KeyFrame[27].movCam_y = -1.6f;
+    KeyFrame[27].movCam_z = -3.4;
+
+    KeyFrame[28].movCam_x = -4.3f;
+    KeyFrame[28].movCam_y = -1.6f;
+    KeyFrame[28].movCam_z = -3.2;
+
+    KeyFrame[29].movCam_x = -4.2f;
+    KeyFrame[29].movCam_y = -1.7f;
+    KeyFrame[29].movCam_z = -2.9;
+
+    KeyFrame[30].movCam_x = -4.0f;
+    KeyFrame[30].movCam_y = -2.1f;
+    KeyFrame[30].movCam_z = -2.7;
+
+    KeyFrame[31].movCam_x = -4.0f;
+    KeyFrame[31].movCam_y = -2.5f;
+    KeyFrame[31].movCam_z = -2.4;
+
+    KeyFrame[32].movCam_x = -3.7f;
+    KeyFrame[32].movCam_y = -2.3f;
+    KeyFrame[32].movCam_z = -2.0;
+
+    KeyFrame[33].movCam_x = -3.5f;
+    KeyFrame[33].movCam_y = -2.3f;
+    KeyFrame[33].movCam_z = -1.8;
+
+    KeyFrame[34].movCam_x = -3.2f;
+    KeyFrame[34].movCam_y = -2.3f;
+    KeyFrame[34].movCam_z = -1.6;
+
+    KeyFrame[35].movCam_x = -3.2f;
+    KeyFrame[35].movCam_y = -2.5f;
+    KeyFrame[35].movCam_z = -1.3;
+
+    KeyFrame[36].movCam_x = -3.0f;
+    KeyFrame[36].movCam_y = -2.5f;
+    KeyFrame[36].movCam_z = -1.1;
+
+    KeyFrame[37].movCam_x = -2.7f;
+    KeyFrame[37].movCam_y = -2.5f;
+    KeyFrame[37].movCam_z = -1.0;
+
+    KeyFrame[38].movCam_x = -2.3f;
+    KeyFrame[38].movCam_y = -2.6f;
+    KeyFrame[38].movCam_z = -1.0;
+
+    KeyFrame[39].movCam_x = -2.0f;
+    KeyFrame[39].movCam_y = -2.8f;
+    KeyFrame[39].movCam_z = -0.8;
+
+    KeyFrame[40].movCam_x = -2.0f;
+    KeyFrame[40].movCam_y = -3.0f;
+    KeyFrame[40].movCam_z = -0.5;
+
+    KeyFrame[41].movCam_x = -2.5f;
+    KeyFrame[41].movCam_y = -3.2f;
+    KeyFrame[41].movCam_z = -0.6;
+
+    KeyFrame[42].movCam_x = -2.9f;
+    KeyFrame[42].movCam_y = -3.1f;
+    KeyFrame[42].movCam_z = -0.6;
+
+    KeyFrame[43].movCam_x = -3.3f;
+    KeyFrame[43].movCam_y = -3.1f;
+    KeyFrame[43].movCam_z = -0.7;
+
+    KeyFrame[44].movCam_x = -3.5f;
+    KeyFrame[44].movCam_y = -3.2f;
+    KeyFrame[44].movCam_z = -0.4;
+
+    KeyFrame[45].movCam_x = -3.8f;
+    KeyFrame[45].movCam_y = -3.0f;
+    KeyFrame[45].movCam_z = 0.0;
+
+    KeyFrame[46].movCam_x = -4.1f;
+    KeyFrame[46].movCam_y = -3.0f;
+    KeyFrame[46].movCam_z = 0.2;
+
+    KeyFrame[47].movCam_x = -4.7f;
+    KeyFrame[47].movCam_y = -3.1f;
+    KeyFrame[47].movCam_z = 0.2;
+
+    KeyFrame[48].movCam_x = -5.0f;
+    KeyFrame[48].movCam_y = -3.1f;
+    KeyFrame[48].movCam_z = 0.2;
+
+    KeyFrame[49].movCam_x = -5.1f;
+    KeyFrame[49].movCam_y = -3.3f;
+    KeyFrame[49].movCam_z = 0.1;
+
+    KeyFrame[50].movCam_x = -5.2f;
+    KeyFrame[50].movCam_y = -3.3f;
+    KeyFrame[50].movCam_z = 0.1;
+
+    KeyFrame[51].movCam_x = -5.3f;
+    KeyFrame[51].movCam_y = -3.4f;
+    KeyFrame[51].movCam_z = 0.1;
+
+    KeyFrame[52].movCam_x = -5.2f;
+    KeyFrame[52].movCam_y = -3.4f;
+    KeyFrame[52].movCam_z = 0.1;
+
+    KeyFrame[53].movCam_x = -5.3f;
+    KeyFrame[53].movCam_y = -3.3f;
+    KeyFrame[53].movCam_z = 0.1;
+
+    KeyFrame[54].movCam_x = -5.2f;
+    KeyFrame[54].movCam_y = -3.3f;
+    KeyFrame[54].movCam_z = 0.1;
+
+    KeyFrame[55].movCam_x = -5.3f;
+    KeyFrame[55].movCam_y = -3.4f;
+    KeyFrame[55].movCam_z = 0.1;
+
+    KeyFrame[56].movCam_x = -5.2f;
+    KeyFrame[56].movCam_y = -3.4f;
+    KeyFrame[56].movCam_z = 0.1;
 
     // Render loop
     // -----------
@@ -429,7 +631,7 @@ int main()
         std::vector<glm::vec3> lightPositions;
         lightPositions.push_back(glm::vec3(0.40f, 4.00f, -0.40f));
         //lightPositions.push_back(glm::vec3(0.80f, 4.8f, 0.8f));
-        lightPositions.push_back(glm::vec3(sin(glfwGetTime()/2)*3, -1.0f, -sin(glfwGetTime()/2)*3));
+        lightPositions.push_back(glm::vec3(sin(glfwGetTime() / 2) * 3, -1.0f, -sin(glfwGetTime() / 2) * 3));
         //lightPositions.push_back(glm::vec3(movX2, movY2, movZ2));
 
 
@@ -441,23 +643,70 @@ int main()
 
         elapsedTime += deltaTime;
         if (elapsedTime > 1.0f / fps) {
-            animationCount++;
-            if (animationCount > keys - 1) {
-                animationCount = 0;
+            if (play) {
+                animationCount++;
+                if (animationCount > keys - 1) {
+                    animationCount = 0;
+                }
+                cout << "Second: " << animationCount << endl;
+                batman.SetPose((float)animationCount, gBones);
+                elapsedTime = 0.0f;
             }
-            cout << "Second: " << animationCount << endl;
-            batman.SetPose((float)animationCount, gBones);
-            elapsedTime = 0.0f;
         }
 
         // input
         // -----
         processInput(window);
 
+        //Cambios de escena
+        switch (animationCount)
+        {
+        case 135:
+            cameraScene.changeScene(3.0616f, 5.1799f, -1.5149f, -180.0f, -26.49f);
+            break;
+        case 231:
+            cameraScene.changeScene(2.4075f, 5.4863f, -1.7135f, 88.99f, -69.60f);
+            break;
+        case 335:
+            cameraScene.changeScene(1.9850f, 3.1212f, -2.8479f, 128.8997f, 7.10f);
+            break;
+        case 552:
+            cameraScene.changeScene(-0.5924f, 3.1663f, -0.7010f, -23.7999f, -9.7999);
+            break;
+        case 670:
+            cameraScene.changeScene(-1.3569f, 3.1977f, 0.1210f, -41.80f, -13.1999f);
+            break;
+        case 768:
+            cameraScene.changeScene(-0.8170f, 3.3595f, -2.0336f, 128.6998f, -15.2999f);
+            break;
+        case 927:
+            cameraScene.changeScene(-0.2752f, 3.4310f, -2.9159f, -232.1002f, -16.60f);
+            break;
+        case 994:
+            cameraScene.changeScene(-0.2082f, 2.6050f, -1.0338f, -127.0997f, 20.0999f);
+            break;
+        case 1098:
+            cameraScene.changeScene(1.1197f, 3.2867f, 0.0763f, -139.4997f, -30.30f);
+            break;
+        case 1228:
+            cameraScene.changeScene(-0.4493f, 2.0741f, 1.3832f, -31.8999f, -2.7999);
+            break;
+        case 1460:
+            cameraScene.changeScene(-2.1590f, 1.9138f, 1.6268f, -18.1998f, -8.20f);
+            break;
+        default:
+            break;
+        }
+
+        glm::vec3 p(camera.GetPosition());
+        printf("Camara x=%f\t y=%f\t z=%f\n", p.x, p.y, p.z);
+        printf("Yaw = %f\t", camera.GetYaw());
+        printf("Pitch = %f\n", camera.GetPitch());
+
         //For keyframes
         inputKeyframes(window);
         animate();
-        //camera.animateCam(posXcam + movCam_x, posYcam + movCam_y, posZcam + movCam_z);
+        camera.animateCam(posXcam + movCam_x, posYcam + movCam_y, posZcam + movCam_z);
 
         // Render scene
         // ------
@@ -468,22 +717,39 @@ int main()
         // -----------------------------------------------
         glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        glm::mat4 view = camera.GetViewMatrix();
+        glm::mat4 projection;
+        glm::mat4 view;
+
+        if (camScen) {
+            projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+            view = camera.GetViewMatrix();
+        }
+        else
+        {
+            projection = glm::perspective(glm::radians(cameraScene.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+            view = cameraScene.GetViewMatrix();
+        }
         glm::mat4 model = glm::mat4(1.0f);
 
         // Enable skinning shader for the animated FBX
         // -------------------------------------------
         ourShader.use();
-        projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
-        view = camera.GetViewMatrix();
+        if (camScen) {
+            projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
+            view = camera.GetViewMatrix();
+        }
+        else
+        {
+            projection = glm::perspective(glm::radians(cameraScene.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
+            view = cameraScene.GetViewMatrix();
+        }
         ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
 
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
         model = glm::rotate(model, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-        model = glm::scale(model, glm::vec3(0.001f, 0.001f, 0.001f));	// it's a bit too big for our scene, so scale it down
+        model = glm::scale(model, glm::vec3(0.001f, 0.001f, 0.001f));   // it's a bit too big for our scene, so scale it down
         ourShader.setMat4("model", model);
 
         ourShader.setMat4("gBones", MAX_RIGGING_BONES, gBones);
@@ -509,8 +775,14 @@ int main()
             shader.setVec3("lights[" + std::to_string(i) + "].Position", lightPositions[i]);
             shader.setVec3("lights[" + std::to_string(i) + "].Color", lightColors[i]);
         }
-        shader.setVec3("viewPos", camera.Position);
-        
+        if (camScen) {
+            shader.setVec3("viewPos", camera.Position);
+        }
+        else
+        {
+            shader.setVec3("viewPos", cameraScene.Position);
+        }
+
         model = glm::mat4(1);
         //model = glm::translate(model, glm::vec3(movX, movY, movZ));
         model = glm::scale(model, glm::vec3(0.1f));
@@ -549,7 +821,13 @@ int main()
         // ---------------
         glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
         skyboxShader.use();
-        view = glm::mat4(glm::mat3(camera.GetViewMatrix()));	// Remove any translation component of the view matrix
+        if (camScen) {
+            view = glm::mat4(glm::mat3(camera.GetViewMatrix()));    // Remove any translation component of the view matrix
+        }
+        else
+        {
+            view = glm::mat4(glm::mat3(cameraScene.GetViewMatrix()));   // Remove any translation component of the view matrix
+        }
         glUniformMatrix4fv(glGetUniformLocation(skyboxShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(glGetUniformLocation(skyboxShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
@@ -719,7 +997,7 @@ void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-
+    /*
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera.ProcessKeyboard(FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -728,7 +1006,7 @@ void processInput(GLFWwindow* window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
-
+    */
     if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
         movX -= 0.1f;
     if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
@@ -737,7 +1015,7 @@ void processInput(GLFWwindow* window)
         movY += 0.1f;
     if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
         //movY -= 0.1f;
-        animationCount = 1250;
+        animationCount = 100;
     if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
         movZ -= 0.1;
     if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
@@ -755,6 +1033,15 @@ void processInput(GLFWwindow* window)
         movZ2 -= 0.1;
     if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
         movZ2 += 0.1;
+    //Switch cameras
+    if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
+        if (cam == 0) {
+            camScen = !camScen;
+            cam++;
+        }
+    }
+    if (glfwGetKey(window, GLFW_KEY_C) == GLFW_RELEASE)
+        cam = 0;
 
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && !bloomKeyPressed)
     {
@@ -806,7 +1093,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     lastY = ypos;
 
 
-    camera.ProcessMouseMovement(xoffset, yoffset);
+    //camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
@@ -874,7 +1161,7 @@ void inputKeyframes(GLFWwindow* window)
             if (play == false && (FrameIndex > 1))
             {
                 resetElements();
-                //First Interpolation				
+                //First Interpolation               
                 interpolation();
                 play = true;
                 playIndex = 0;
