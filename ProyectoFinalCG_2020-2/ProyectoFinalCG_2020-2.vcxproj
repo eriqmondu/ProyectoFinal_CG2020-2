@@ -176,6 +176,8 @@
     <None Include="Shaders\7.blur.fs" />
     <None Include="Shaders\7.blur.vs" />
     <None Include="Shaders\7.light_box.fs" />
+    <None Include="Shaders\fragment_skinning.fs" />
+    <None Include="Shaders\vertex_skinning.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
