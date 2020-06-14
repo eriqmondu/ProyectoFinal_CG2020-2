@@ -2,6 +2,8 @@
 #include <GLFW/glfw3.h>
 #include "stb_image.h"
 
+
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -17,6 +19,12 @@
 
 #include <iostream>
 
+// Internal Windows sound libraries
+#include <windows.h>
+#include <mmsystem.h>
+#include <mciapi.h>
+#pragma comment(lib, "Winmm.lib")
+
 // Function definition
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -28,6 +36,10 @@ void renderQuad();
 void renderCube();
 void inputKeyframes(GLFWwindow* window);
 void initialKeyFrames();
+
+// Music definition
+void mainMusic();
+void macarenaMusic();
 
 //Keep a 16:9 resolution, please.
 const unsigned int SCR_WIDTH = 640;
@@ -149,6 +161,20 @@ void animate(void)
     }
 }
 /*End Keyframes code*/
+
+// Music functiones
+
+void mainMusic() {
+    PlaySound(NULL, NULL, SND_ASYNC);
+    PlaySound(TEXT("epic_music.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+}
+
+void macarenaMusic() {
+    PlaySound(NULL, NULL, SND_ASYNC);
+    //Source
+    //www.youtube.com/watch?v=obUHDyWFMi8
+    PlaySound(TEXT("macarena.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+}
 
 int main()
 {
@@ -887,8 +913,11 @@ void gameMode(GLFWwindow* window) {
     }
     if (animationCount == 1695) {
         animacion = false;
-        if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
+        if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) {
             animacion = true;
+            macarenaMusic();
+        }
+
     }
 
 }
@@ -904,6 +933,7 @@ void processInput(GLFWwindow* window)
         animationCount = 0;
         animacion = true;
         game = true;
+        mainMusic();
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) //disable game mode, demo mode
         game = false;
