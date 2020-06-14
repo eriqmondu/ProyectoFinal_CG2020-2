@@ -26,6 +26,7 @@ unsigned int loadTexture(const char* path, bool gammaCorrection);
 void renderQuad();
 void renderCube();
 void inputKeyframes(GLFWwindow* window);
+void initialKeyFrames();
 
 
 const unsigned int SCR_WIDTH = 1024;
@@ -48,7 +49,7 @@ glm::vec3 posCam(3.3f, 5.5f, 1.8f);
 Camera camera(posCam);
 
 //Animation flags
-float reproduciranimacion, habilitaranimacion;
+float playAnimation, enableAnimation;
 
 float lastX = (float)SCR_WIDTH / 2.0;
 float lastY = (float)SCR_HEIGHT / 2.0;
@@ -88,7 +89,7 @@ typedef struct _frame
 }FRAME;
 
 FRAME KeyFrame[MAX_FRAMES];
-int FrameIndex = 60;            //introducir datos
+int FrameIndex = 60;            //Set number of Keyframes
 bool play = false;
 int playIndex = 0;
 
@@ -121,13 +122,12 @@ void animate(void)
             if (playIndex > FrameIndex - 2) //end of total animation?
             {
                 printf("Frame index= %d\n", FrameIndex);
-                printf("termina anim\n");
+                printf("End animation\n");
                 playIndex = 0;
                 play = false;
             }
             else //Next frame interpolations
             {
-                //printf("entro aquí\n");
                 i_curr_steps = 0; //Reset counter
                 //Interpolation
                 interpolation();
@@ -135,7 +135,7 @@ void animate(void)
         }
         else
         {
-            //printf("se quedó aqui\n");
+            //printf("Last Position\n");
             //printf("max steps: %f", i_max_steps);
             //Draw animation
             movCam_x += KeyFrame[playIndex].movCam_xInc;
@@ -145,7 +145,7 @@ void animate(void)
         }
     }
 }
-/* FIN KEYFRAMES*/
+/*End Keyframes code*/
 
 int main()
 {
@@ -391,234 +391,8 @@ int main()
     shaderBloomFinal.setInt("scene", 0);
     shaderBloomFinal.setInt("bloomBlur", 1);
 
-    //Initial Keyframes to camera
-    KeyFrame[0].movCam_x = 0.0f;            //Recorrido primer edificio
-    KeyFrame[0].movCam_y = 0.0f;
-    KeyFrame[0].movCam_z = 0.0f;
-
-    KeyFrame[1].movCam_x = -0.15;
-    KeyFrame[1].movCam_y = 0.0;
-    KeyFrame[1].movCam_z = -1.0;
-
-    KeyFrame[2].movCam_x = -0.15;
-    KeyFrame[2].movCam_y = 0.0f;
-    KeyFrame[2].movCam_z = -1.6f;
-
-    KeyFrame[3].movCam_x = -0.15f;
-    KeyFrame[3].movCam_y = 0.0f;
-    KeyFrame[3].movCam_z = -2.0f;
-
-    KeyFrame[4].movCam_x = -0.35f;
-    KeyFrame[4].movCam_y = 0.0f;
-    KeyFrame[4].movCam_z = -2.6f;
-
-    KeyFrame[5].movCam_x = -0.35f;
-    KeyFrame[5].movCam_y = 0.0f;           //Movimientos sin cambio de posicion
-    KeyFrame[5].movCam_z = -2.6f;
-
-    KeyFrame[6].movCam_x = -0.4f;           //Primer salto
-    KeyFrame[6].movCam_y = 0.0f;
-    KeyFrame[6].movCam_z = -2.6f;
-
-    KeyFrame[7].movCam_x = -0.9f;
-    KeyFrame[7].movCam_y = -0.7f;
-    KeyFrame[7].movCam_z = -2.7f;
-
-    KeyFrame[8].movCam_x = -1.0f;
-    KeyFrame[8].movCam_y = -1.5f;
-    KeyFrame[8].movCam_z = -2.9;
-
-    KeyFrame[9].movCam_x = -1.2f;
-    KeyFrame[9].movCam_y = -1.75f;
-    KeyFrame[9].movCam_z = -3.0;
-
-    KeyFrame[10].movCam_x = -1.7f;
-    KeyFrame[10].movCam_y = -1.5f;
-    KeyFrame[10].movCam_z = -3.0;
-
-    KeyFrame[11].movCam_x = -1.7f;
-    KeyFrame[11].movCam_y = -1.5f;
-    KeyFrame[11].movCam_z = -3.4;
-
-    KeyFrame[12].movCam_x = -1.8f;
-    KeyFrame[12].movCam_y = -1.5f;
-    KeyFrame[12].movCam_z = -3.5;
-
-    KeyFrame[13].movCam_x = -2.0f;
-    KeyFrame[13].movCam_y = -1.6f;
-    KeyFrame[13].movCam_z = -3.5;
-
-    KeyFrame[14].movCam_x = -2.2f;
-    KeyFrame[14].movCam_y = -1.6f;
-    KeyFrame[14].movCam_z = -3.5;
-
-    KeyFrame[15].movCam_x = -2.4f;
-    KeyFrame[15].movCam_y = -1.85f;
-    KeyFrame[15].movCam_z = -3.0;
-
-    KeyFrame[16].movCam_x = -2.4f;
-    KeyFrame[16].movCam_y = -1.85f;
-    KeyFrame[16].movCam_z = -2.5;
-
-    KeyFrame[17].movCam_x = -2.7f;
-    KeyFrame[17].movCam_y = -1.7f;
-    KeyFrame[17].movCam_z = -2.0;
-
-    KeyFrame[18].movCam_x = -2.9f;
-    KeyFrame[18].movCam_y = -1.6f;
-    KeyFrame[18].movCam_z = -1.8;
-
-    KeyFrame[19].movCam_x = -3.2f;
-    KeyFrame[19].movCam_y = -1.6f;
-    KeyFrame[19].movCam_z = -1.7;
-
-    KeyFrame[20].movCam_x = -3.5f;
-    KeyFrame[20].movCam_y = -1.6f;
-    KeyFrame[20].movCam_z = -1.6;
-
-    KeyFrame[21].movCam_x = -3.9f;
-    KeyFrame[21].movCam_y = -1.6f;
-    KeyFrame[21].movCam_z = -1.5;
-
-    KeyFrame[22].movCam_x = -4.4f;
-    KeyFrame[22].movCam_y = -1.6f;
-    KeyFrame[22].movCam_z = -1.5;
-
-    KeyFrame[23].movCam_x = -4.7f;
-    KeyFrame[23].movCam_y = -1.6f;
-    KeyFrame[23].movCam_z = -1.7;
-
-    KeyFrame[24].movCam_x = -4.7f;
-    KeyFrame[24].movCam_y = -1.6f;
-    KeyFrame[24].movCam_z = -1.9;
-
-    KeyFrame[25].movCam_x = -4.7f;
-    KeyFrame[25].movCam_y = -1.4f;
-    KeyFrame[25].movCam_z = -2.3;
-
-    KeyFrame[26].movCam_x = -4.7f;
-    KeyFrame[26].movCam_y = -1.6f;
-    KeyFrame[26].movCam_z = -2.9;
-
-    KeyFrame[27].movCam_x = -4.5f;
-    KeyFrame[27].movCam_y = -1.6f;
-    KeyFrame[27].movCam_z = -3.4;
-
-    KeyFrame[28].movCam_x = -4.3f;
-    KeyFrame[28].movCam_y = -1.6f;
-    KeyFrame[28].movCam_z = -3.2;
-
-    KeyFrame[29].movCam_x = -4.2f;
-    KeyFrame[29].movCam_y = -1.7f;
-    KeyFrame[29].movCam_z = -2.9;
-
-    KeyFrame[30].movCam_x = -4.0f;
-    KeyFrame[30].movCam_y = -2.1f;
-    KeyFrame[30].movCam_z = -2.7;
-
-    KeyFrame[31].movCam_x = -4.0f;
-    KeyFrame[31].movCam_y = -2.5f;
-    KeyFrame[31].movCam_z = -2.4;
-
-    KeyFrame[32].movCam_x = -3.7f;
-    KeyFrame[32].movCam_y = -2.3f;
-    KeyFrame[32].movCam_z = -2.0;
-
-    KeyFrame[33].movCam_x = -3.5f;
-    KeyFrame[33].movCam_y = -2.3f;
-    KeyFrame[33].movCam_z = -1.8;
-
-    KeyFrame[34].movCam_x = -3.2f;
-    KeyFrame[34].movCam_y = -2.3f;
-    KeyFrame[34].movCam_z = -1.6;
-
-    KeyFrame[35].movCam_x = -3.2f;
-    KeyFrame[35].movCam_y = -2.5f;
-    KeyFrame[35].movCam_z = -1.3;
-
-    KeyFrame[36].movCam_x = -3.0f;
-    KeyFrame[36].movCam_y = -2.5f;
-    KeyFrame[36].movCam_z = -1.1;
-
-    KeyFrame[37].movCam_x = -2.7f;
-    KeyFrame[37].movCam_y = -2.5f;
-    KeyFrame[37].movCam_z = -1.0;
-
-    KeyFrame[38].movCam_x = -2.3f;
-    KeyFrame[38].movCam_y = -2.6f;
-    KeyFrame[38].movCam_z = -1.0;
-
-    KeyFrame[39].movCam_x = -2.0f;
-    KeyFrame[39].movCam_y = -2.8f;
-    KeyFrame[39].movCam_z = -0.8;
-
-    KeyFrame[40].movCam_x = -2.0f;
-    KeyFrame[40].movCam_y = -3.0f;
-    KeyFrame[40].movCam_z = -0.5;
-
-    KeyFrame[41].movCam_x = -2.5f;
-    KeyFrame[41].movCam_y = -3.2f;
-    KeyFrame[41].movCam_z = -0.6;
-
-    KeyFrame[42].movCam_x = -2.9f;
-    KeyFrame[42].movCam_y = -3.1f;
-    KeyFrame[42].movCam_z = -0.6;
-
-    KeyFrame[43].movCam_x = -3.3f;
-    KeyFrame[43].movCam_y = -3.1f;
-    KeyFrame[43].movCam_z = -0.7;
-
-    KeyFrame[44].movCam_x = -3.5f;
-    KeyFrame[44].movCam_y = -3.2f;
-    KeyFrame[44].movCam_z = -0.4;
-
-    KeyFrame[45].movCam_x = -3.8f;
-    KeyFrame[45].movCam_y = -3.0f;
-    KeyFrame[45].movCam_z = 0.0;
-
-    KeyFrame[46].movCam_x = -4.1f;
-    KeyFrame[46].movCam_y = -3.0f;
-    KeyFrame[46].movCam_z = 0.2;
-
-    KeyFrame[47].movCam_x = -4.7f;
-    KeyFrame[47].movCam_y = -3.1f;
-    KeyFrame[47].movCam_z = 0.2;
-
-    KeyFrame[48].movCam_x = -5.0f;
-    KeyFrame[48].movCam_y = -3.1f;
-    KeyFrame[48].movCam_z = 0.2;
-
-    KeyFrame[49].movCam_x = -5.1f;
-    KeyFrame[49].movCam_y = -3.3f;
-    KeyFrame[49].movCam_z = 0.1;
-
-    KeyFrame[50].movCam_x = -5.2f;
-    KeyFrame[50].movCam_y = -3.3f;
-    KeyFrame[50].movCam_z = 0.1;
-
-    KeyFrame[51].movCam_x = -5.3f;
-    KeyFrame[51].movCam_y = -3.4f;
-    KeyFrame[51].movCam_z = 0.1;
-
-    KeyFrame[52].movCam_x = -5.2f;
-    KeyFrame[52].movCam_y = -3.4f;
-    KeyFrame[52].movCam_z = 0.1;
-
-    KeyFrame[53].movCam_x = -5.3f;
-    KeyFrame[53].movCam_y = -3.3f;
-    KeyFrame[53].movCam_z = 0.1;
-
-    KeyFrame[54].movCam_x = -5.2f;
-    KeyFrame[54].movCam_y = -3.3f;
-    KeyFrame[54].movCam_z = 0.1;
-
-    KeyFrame[55].movCam_x = -5.3f;
-    KeyFrame[55].movCam_y = -3.4f;
-    KeyFrame[55].movCam_z = 0.1;
-
-    KeyFrame[56].movCam_x = -5.2f;
-    KeyFrame[56].movCam_y = -3.4f;
-    KeyFrame[56].movCam_z = 0.1;
+    //Function to call initial Keyframes
+    initialKeyFrames();
 
     // Render loop
     // -----------
@@ -658,7 +432,7 @@ int main()
         // -----
         processInput(window);
 
-        //Cambios de escena
+        //Scence changes
         switch (animationCount)
         {
         case 135:
@@ -1156,7 +930,7 @@ void inputKeyframes(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
     {
-        if (reproduciranimacion < 1)
+        if (playAnimation < 1)
         {
             if (play == false && (FrameIndex > 1))
             {
@@ -1166,9 +940,9 @@ void inputKeyframes(GLFWwindow* window)
                 play = true;
                 playIndex = 0;
                 i_curr_steps = 0;
-                reproduciranimacion++;
-                printf("presiona 0 para habilitar reproducir de nuevo la animación'\n");
-                habilitaranimacion = 0;
+                playAnimation++;
+                printf("Press 0 to enable animation'\n");
+                enableAnimation = 0;
             }
             else
             {
@@ -1178,9 +952,240 @@ void inputKeyframes(GLFWwindow* window)
     }
     if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
     {
-        if (habilitaranimacion < 1)
+        if (enableAnimation < 1)
         {
-            reproduciranimacion = 0;
+            playAnimation = 0;
         }
     }
+}
+
+void initialKeyFrames() {
+    //Initial Keyframes to camera
+    KeyFrame[0].movCam_x = 0.0f;            //First building
+    KeyFrame[0].movCam_y = 0.0f;
+    KeyFrame[0].movCam_z = 0.0f;
+
+    KeyFrame[1].movCam_x = -0.15;
+    KeyFrame[1].movCam_y = 0.0;
+    KeyFrame[1].movCam_z = -1.0;
+
+    KeyFrame[2].movCam_x = -0.15;
+    KeyFrame[2].movCam_y = 0.0f;
+    KeyFrame[2].movCam_z = -1.6f;
+
+    KeyFrame[3].movCam_x = -0.15f;
+    KeyFrame[3].movCam_y = 0.0f;
+    KeyFrame[3].movCam_z = -2.0f;
+
+    KeyFrame[4].movCam_x = -0.35f;
+    KeyFrame[4].movCam_y = 0.0f;
+    KeyFrame[4].movCam_z = -2.6f;
+
+    KeyFrame[5].movCam_x = -0.35f;
+    KeyFrame[5].movCam_y = 0.0f;           //Movements in the same position
+    KeyFrame[5].movCam_z = -2.6f;
+
+    KeyFrame[6].movCam_x = -0.4f;           //First jump
+    KeyFrame[6].movCam_y = 0.0f;
+    KeyFrame[6].movCam_z = -2.6f;
+
+    KeyFrame[7].movCam_x = -0.9f;
+    KeyFrame[7].movCam_y = -0.7f;
+    KeyFrame[7].movCam_z = -2.7f;
+
+    KeyFrame[8].movCam_x = -1.0f;
+    KeyFrame[8].movCam_y = -1.5f;
+    KeyFrame[8].movCam_z = -2.9;
+
+    KeyFrame[9].movCam_x = -1.2f;
+    KeyFrame[9].movCam_y = -1.75f;
+    KeyFrame[9].movCam_z = -3.0;
+
+    KeyFrame[10].movCam_x = -1.7f;
+    KeyFrame[10].movCam_y = -1.5f;
+    KeyFrame[10].movCam_z = -3.0;
+
+    KeyFrame[11].movCam_x = -1.7f;
+    KeyFrame[11].movCam_y = -1.5f;
+    KeyFrame[11].movCam_z = -3.4;
+
+    KeyFrame[12].movCam_x = -1.8f;
+    KeyFrame[12].movCam_y = -1.5f;
+    KeyFrame[12].movCam_z = -3.5;
+
+    KeyFrame[13].movCam_x = -2.0f;
+    KeyFrame[13].movCam_y = -1.6f;
+    KeyFrame[13].movCam_z = -3.5;
+
+    KeyFrame[14].movCam_x = -2.2f;
+    KeyFrame[14].movCam_y = -1.6f;
+    KeyFrame[14].movCam_z = -3.5;
+
+    KeyFrame[15].movCam_x = -2.4f;
+    KeyFrame[15].movCam_y = -1.85f;
+    KeyFrame[15].movCam_z = -3.0;
+
+    KeyFrame[16].movCam_x = -2.4f;
+    KeyFrame[16].movCam_y = -1.85f;
+    KeyFrame[16].movCam_z = -2.5;
+
+    KeyFrame[17].movCam_x = -2.7f;
+    KeyFrame[17].movCam_y = -1.7f;
+    KeyFrame[17].movCam_z = -2.0;
+
+    KeyFrame[18].movCam_x = -2.9f;
+    KeyFrame[18].movCam_y = -1.6f;
+    KeyFrame[18].movCam_z = -1.8;
+
+    KeyFrame[19].movCam_x = -3.2f;
+    KeyFrame[19].movCam_y = -1.6f;
+    KeyFrame[19].movCam_z = -1.7;
+
+    KeyFrame[20].movCam_x = -3.5f;
+    KeyFrame[20].movCam_y = -1.6f;
+    KeyFrame[20].movCam_z = -1.6;
+
+    KeyFrame[21].movCam_x = -3.9f;
+    KeyFrame[21].movCam_y = -1.6f;
+    KeyFrame[21].movCam_z = -1.5;
+
+    KeyFrame[22].movCam_x = -4.4f;
+    KeyFrame[22].movCam_y = -1.6f;
+    KeyFrame[22].movCam_z = -1.5;
+
+    KeyFrame[23].movCam_x = -4.7f;
+    KeyFrame[23].movCam_y = -1.6f;
+    KeyFrame[23].movCam_z = -1.7;
+
+    KeyFrame[24].movCam_x = -4.7f;
+    KeyFrame[24].movCam_y = -1.6f;
+    KeyFrame[24].movCam_z = -1.9;
+
+    KeyFrame[25].movCam_x = -4.7f;
+    KeyFrame[25].movCam_y = -1.4f;
+    KeyFrame[25].movCam_z = -2.3;
+
+    KeyFrame[26].movCam_x = -4.7f;
+    KeyFrame[26].movCam_y = -1.6f;
+    KeyFrame[26].movCam_z = -2.9;
+
+    KeyFrame[27].movCam_x = -4.5f;
+    KeyFrame[27].movCam_y = -1.6f;
+    KeyFrame[27].movCam_z = -3.4;
+
+    KeyFrame[28].movCam_x = -4.3f;
+    KeyFrame[28].movCam_y = -1.6f;
+    KeyFrame[28].movCam_z = -3.2;
+
+    KeyFrame[29].movCam_x = -4.2f;
+    KeyFrame[29].movCam_y = -1.7f;
+    KeyFrame[29].movCam_z = -2.9;
+
+    KeyFrame[30].movCam_x = -4.0f;
+    KeyFrame[30].movCam_y = -2.1f;
+    KeyFrame[30].movCam_z = -2.7;
+
+    KeyFrame[31].movCam_x = -4.0f;
+    KeyFrame[31].movCam_y = -2.5f;
+    KeyFrame[31].movCam_z = -2.4;
+
+    KeyFrame[32].movCam_x = -3.7f;
+    KeyFrame[32].movCam_y = -2.3f;
+    KeyFrame[32].movCam_z = -2.0;
+
+    KeyFrame[33].movCam_x = -3.5f;
+    KeyFrame[33].movCam_y = -2.3f;
+    KeyFrame[33].movCam_z = -1.8;
+
+    KeyFrame[34].movCam_x = -3.2f;
+    KeyFrame[34].movCam_y = -2.3f;
+    KeyFrame[34].movCam_z = -1.6;
+
+    KeyFrame[35].movCam_x = -3.2f;
+    KeyFrame[35].movCam_y = -2.5f;
+    KeyFrame[35].movCam_z = -1.3;
+
+    KeyFrame[36].movCam_x = -3.0f;
+    KeyFrame[36].movCam_y = -2.5f;
+    KeyFrame[36].movCam_z = -1.1;
+
+    KeyFrame[37].movCam_x = -2.7f;
+    KeyFrame[37].movCam_y = -2.5f;
+    KeyFrame[37].movCam_z = -1.0;
+
+    KeyFrame[38].movCam_x = -2.3f;
+    KeyFrame[38].movCam_y = -2.6f;
+    KeyFrame[38].movCam_z = -1.0;
+
+    KeyFrame[39].movCam_x = -2.0f;
+    KeyFrame[39].movCam_y = -2.8f;
+    KeyFrame[39].movCam_z = -0.8;
+
+    KeyFrame[40].movCam_x = -2.0f;
+    KeyFrame[40].movCam_y = -3.0f;
+    KeyFrame[40].movCam_z = -0.5;
+
+    KeyFrame[41].movCam_x = -2.5f;
+    KeyFrame[41].movCam_y = -3.2f;
+    KeyFrame[41].movCam_z = -0.6;
+
+    KeyFrame[42].movCam_x = -2.9f;
+    KeyFrame[42].movCam_y = -3.1f;
+    KeyFrame[42].movCam_z = -0.6;
+
+    KeyFrame[43].movCam_x = -3.3f;
+    KeyFrame[43].movCam_y = -3.1f;
+    KeyFrame[43].movCam_z = -0.7;
+
+    KeyFrame[44].movCam_x = -3.5f;
+    KeyFrame[44].movCam_y = -3.2f;
+    KeyFrame[44].movCam_z = -0.4;
+
+    KeyFrame[45].movCam_x = -3.8f;
+    KeyFrame[45].movCam_y = -3.0f;
+    KeyFrame[45].movCam_z = 0.0;
+
+    KeyFrame[46].movCam_x = -4.1f;
+    KeyFrame[46].movCam_y = -3.0f;
+    KeyFrame[46].movCam_z = 0.2;
+
+    KeyFrame[47].movCam_x = -4.7f;
+    KeyFrame[47].movCam_y = -3.1f;
+    KeyFrame[47].movCam_z = 0.2;
+
+    KeyFrame[48].movCam_x = -5.0f;
+    KeyFrame[48].movCam_y = -3.1f;
+    KeyFrame[48].movCam_z = 0.2;
+
+    KeyFrame[49].movCam_x = -5.1f;
+    KeyFrame[49].movCam_y = -3.3f;
+    KeyFrame[49].movCam_z = 0.1;
+
+    KeyFrame[50].movCam_x = -5.2f;
+    KeyFrame[50].movCam_y = -3.3f;
+    KeyFrame[50].movCam_z = 0.1;
+
+    KeyFrame[51].movCam_x = -5.3f;
+    KeyFrame[51].movCam_y = -3.4f;
+    KeyFrame[51].movCam_z = 0.1;
+
+    KeyFrame[52].movCam_x = -5.2f;
+    KeyFrame[52].movCam_y = -3.4f;
+    KeyFrame[52].movCam_z = 0.1;
+
+    KeyFrame[53].movCam_x = -5.3f;
+    KeyFrame[53].movCam_y = -3.3f;
+    KeyFrame[53].movCam_z = 0.1;
+
+    KeyFrame[54].movCam_x = -5.2f;
+    KeyFrame[54].movCam_y = -3.3f;
+    KeyFrame[54].movCam_z = 0.1;
+
+    KeyFrame[55].movCam_x = -5.3f;
+    KeyFrame[55].movCam_y = -3.4f;
+    KeyFrame[55].movCam_z = 0.1;
+
+    KeyFrame[56].movCam_x = -5.2f;
+    KeyFrame[56].movCam_y = -3.4f;
+    KeyFrame[56].movCam_z = 0.1;
 }
