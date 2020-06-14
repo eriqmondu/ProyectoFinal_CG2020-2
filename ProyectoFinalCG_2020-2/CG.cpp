@@ -165,19 +165,20 @@ void animate(void)
 // Music functiones
 
 void mainMusic() {
+    //www.youtube.com/watch?v=SFxj6CZM2jE
     PlaySound(NULL, NULL, SND_ASYNC);
     PlaySound(TEXT("epic_music.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 }
 
 void macarenaMusic() {
     PlaySound(NULL, NULL, SND_ASYNC);
-    //Source
     //www.youtube.com/watch?v=obUHDyWFMi8
     PlaySound(TEXT("macarena.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 }
 
 int main()
 {
+    //mainMusic();
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
@@ -234,7 +235,7 @@ int main()
     // Animated skinning FBX shader (thanks Sergio Vite!)
     // --------------------------------------------------
     ShaderAnim ourShader("Shaders/vertex_skinning.vs", "Shaders/fragment_skinning.fs");
-#define MAX_RIGGING_BONES 100
+    #define MAX_RIGGING_BONES 100
     ourShader.setBonesIDs(MAX_RIGGING_BONES);
 
 
@@ -408,7 +409,7 @@ int main()
     // -------------
 
     // Positions (only if static, otherwise insert lightPositions inside the render loop)
-    std::vector<glm::vec3> lightPositions;
+    //std::vector<glm::vec3> lightPositions;
     //lightPositions.push_back(glm::vec3(0.0f, 2.0f, 0.0f));
     //lightPositions.push_back(glm::vec3(0.0f, 5.0f, 0.0f));
     //lightPositions.push_back(glm::vec3(0.0f, 5.0f, 3.0f));
@@ -417,7 +418,6 @@ int main()
     std::vector<glm::vec3> lightColors;
     lightColors.push_back(glm::vec3(10.0, 10.0, 10.0));
     lightColors.push_back(glm::vec3(54.9f, 31.2f, 20.8f));
-    //lightColors.push_back(glm::vec3(0.0f, 5.0f, 0.0f));
 
 
     // Bloom and Blur shaders configuration
@@ -502,9 +502,9 @@ int main()
         case 552:
             cameraScene.changeScene(-0.5924f, 3.1663f, -0.7010f, -23.7999f, -9.7999);
             break;
-            //case 670:
-            //    cameraScene.changeScene(-1.3569f, 3.1977f, 0.1210f, -41.80f, -13.1999f);
-            //    break;
+        //case 670:
+        //    cameraScene.changeScene(-1.3569f, 3.1977f, 0.1210f, -41.80f, -13.1999f);
+        //    break;
         case 660: // New
             cameraScene.changeScene(0.057982f, 2.509783f, -0.995944, -617.000549, 53.099998);
             break;
@@ -529,9 +529,9 @@ int main()
         case 1178: //New
             cameraScene.changeScene(0.464260f, 2.627294f, -0.193444f, -488.500641f, -6.300014);
             break;
-            //case 1220:
-            //    cameraScene.changeScene(1.1197f, 3.2867f, 0.0763f, -139.4997f, -30.30f);
-            //    break;
+        //case 1220:
+        //    cameraScene.changeScene(1.1197f, 3.2867f, 0.0763f, -139.4997f, -30.30f);
+        //    break;
         case 1228:
             cameraScene.changeScene(-0.4493f, 2.0741f, 1.3832f, -31.8999f, -2.7999);
             break;
@@ -547,9 +547,9 @@ int main()
         case 1450: // New camera
             cameraScene.changeScene(0.349872f, 1.736649f, 0.905867, -404.100494f, 10.200009f);
             break;
-            //case 1489: //Quita esta, es igual que la 1620
-            //    cameraScene.changeScene(-2.1590f, 1.9138f, 1.6268f, -18.1998f, -8.20f);
-            //    break;
+        //case 1489: //Quita esta, es igual que la 1620
+        //    cameraScene.changeScene(-2.1590f, 1.9138f, 1.6268f, -18.1998f, -8.20f);
+        //    break;
         case 1545: // Last jump camera
             cameraScene.changeScene(-0.566445f, 1.637479f, 0.748491f, -300.400757, 20.100063);
             break;
@@ -565,7 +565,7 @@ int main()
         //printf("Yaw = %f\t", camera.GetYaw());
         //printf("Pitch = %f\n", camera.GetPitch());
 
-        //Me interesa la posición de la cámaras en tomas
+        // Me interesa la posición de la cámaras en tomas
         glm::vec3 p(cameraScene.GetPosition());
         printf("Camara x=%f\t y=%f\t z=%f\n", p.x, p.y, p.z);
         printf("Yaw = %f\t", cameraScene.GetYaw());
