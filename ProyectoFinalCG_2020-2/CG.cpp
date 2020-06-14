@@ -22,15 +22,16 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void processInput(GLFWwindow* window);
+void gameMode(GLFWwindow* window);
 unsigned int loadTexture(const char* path, bool gammaCorrection);
 void renderQuad();
 void renderCube();
 void inputKeyframes(GLFWwindow* window);
 void initialKeyFrames();
 
-
-const unsigned int SCR_WIDTH = 1024;
-const unsigned int SCR_HEIGHT = 600;
+//Keep a 16:9 resolution, please.
+const unsigned int SCR_WIDTH = 640;
+const unsigned int SCR_HEIGHT = 360;
 
 // Bloom effect switch
 bool bloom = true;
@@ -67,12 +68,14 @@ float elapsedTime = 0.0f;
 float movX, movY, movZ;
 float movX2, movY2, movZ2;
 
-///////////////////////////////KEYFRAMES/////////////////////
 bool animacion = false;
+bool game = true;
+///////////////////////////////KEYFRAMES/////////////////////
+
 
 //NEW// Keyframes
 float posXcam = posCam.x, posYcam = posCam.y, posZcam = posCam.z;
-float   movCam_x = 0.0f, movCam_y = 0.0f, movCam_z = 0.0f;
+float movCam_x = 0.0f, movCam_y = 0.0f, movCam_z = 0.0f;
 
 #define MAX_FRAMES 60       //Max number of keyframes
 int i_max_steps = 90;
@@ -89,8 +92,8 @@ typedef struct _frame
 }FRAME;
 
 FRAME KeyFrame[MAX_FRAMES];
-int FrameIndex = 60;            //Set number of Keyframes
-bool play = false;
+int FrameIndex = 200;            //Set number of Keyframes (originally 60)
+bool play_key = false;
 int playIndex = 0;
 
 void resetElements(void)
@@ -98,7 +101,7 @@ void resetElements(void)
     movCam_x = KeyFrame[0].movCam_x;
     movCam_y = KeyFrame[0].movCam_y;
     movCam_z = KeyFrame[0].movCam_z;
-    animationCount = 0;
+    //animationCount = 0;
     cameraScene.changeScene(2.8636f, 5.2608f, -1.9636f, 93.7998f, -26.50);
 }
 
@@ -113,7 +116,7 @@ void interpolation(void)
 void animate(void)
 {
     //Object movement
-    if (play)
+    if (play_key)
     {
         if (i_curr_steps >= i_max_steps) //end of animation between frames?
         {
@@ -124,7 +127,7 @@ void animate(void)
                 printf("Frame index= %d\n", FrameIndex);
                 printf("End animation\n");
                 playIndex = 0;
-                play = false;
+                play_key = false;
             }
             else //Next frame interpolations
             {
@@ -176,7 +179,7 @@ int main()
     glfwSetScrollCallback(window, scroll_callback);
 
     // Tell GLFW to capture our mouse
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
@@ -213,7 +216,17 @@ int main()
     // -----------------
     std::cout << "Loading OBJ Models..." << std::endl;
     Model edificio((char*)"Models/Ciudad_final.obj");
-    Model mujer((char*)"Models/batmanTexturizado.obj");
+
+    // Floating text objects
+    Model start((char*)"Models/Text/start_running.obj");
+    Model jump1((char*)"Models/Text/1.obj");
+    Model jump_run1((char*)"Models/Text/2.obj");
+    Model jump_slide((char*)"Models/Text/3.obj");
+    Model cool((char*)"Models/Text/4.obj");
+    Model jump_again((char*)"Models/Text/5.obj");
+    Model dive((char*)"Models/Text/6.obj");
+    Model fly((char*)"Models/Text/7.obj");
+    Model macarena((char*)"Models/Text/8.obj");
 
     // FBX model loading
     // -----------------
@@ -376,7 +389,7 @@ int main()
 
     // Colors (only if static, otherwise insert lightColors inside the render loop)
     std::vector<glm::vec3> lightColors;
-    lightColors.push_back(glm::vec3(15.0, 15.0, 15.0));
+    lightColors.push_back(glm::vec3(10.0, 10.0, 10.0));
     lightColors.push_back(glm::vec3(54.9f, 31.2f, 20.8f));
     //lightColors.push_back(glm::vec3(0.0f, 5.0f, 0.0f));
 
@@ -403,7 +416,7 @@ int main()
 
         // Interactive light positions
         std::vector<glm::vec3> lightPositions;
-        lightPositions.push_back(glm::vec3(0.40f, 4.00f, -0.40f));
+        lightPositions.push_back(glm::vec3(0.40f, 5.00f, -0.40f));
         //lightPositions.push_back(glm::vec3(0.80f, 4.8f, 0.8f));
         lightPositions.push_back(glm::vec3(sin(glfwGetTime() / 2) * 3, -1.0f, -sin(glfwGetTime() / 2) * 3));
         //lightPositions.push_back(glm::vec3(movX2, movY2, movZ2));
@@ -417,10 +430,11 @@ int main()
 
         elapsedTime += deltaTime;
         if (elapsedTime > 1.0f / fps) {
-            if (play) {
+            if (animacion) {
                 animationCount++;
                 if (animationCount > keys - 1) {
                     animationCount = 0;
+                    animacion = false;
                 }
                 cout << "Second: " << animationCount << endl;
                 batman.SetPose((float)animationCount, gBones);
@@ -431,14 +445,29 @@ int main()
         // input
         // -----
         processInput(window);
+        
+        if (game) {
+            gameMode(window);
+        }
 
-        //Scence changes
+
+        /*Scence changes*/
+
         switch (animationCount)
         {
+        case 0:
+            cameraScene.changeScene(2.8636f, 5.2608f, -1.9636f, 93.7998f, -26.50);
+        break;
         case 135:
             cameraScene.changeScene(3.0616f, 5.1799f, -1.5149f, -180.0f, -26.49f);
             break;
         case 231:
+            cameraScene.changeScene(2.4075f, 5.4863f, -1.7135f, 88.99f, -69.60f);
+            break;
+        case 250: //New eriq camera
+            cameraScene.changeScene(2.029508f, 3.613027f, -1.581665f, -329.300049f, 37.300014f);
+            break;
+        case 320: // Go back to camera at the same position as frame 231
             cameraScene.changeScene(2.4075f, 5.4863f, -1.7135f, 88.99f, -69.60f);
             break;
         case 335:
@@ -447,8 +476,17 @@ int main()
         case 552:
             cameraScene.changeScene(-0.5924f, 3.1663f, -0.7010f, -23.7999f, -9.7999);
             break;
-        case 670:
+            //case 670:
+            //    cameraScene.changeScene(-1.3569f, 3.1977f, 0.1210f, -41.80f, -13.1999f);
+            //    break;
+        case 660: // New
+            cameraScene.changeScene(0.057982f, 2.509783f, -0.995944, -617.000549, 53.099998);
+            break;
+        case 700:
             cameraScene.changeScene(-1.3569f, 3.1977f, 0.1210f, -41.80f, -13.1999f);
+            break;
+        case 733: //New
+            cameraScene.changeScene(-0.647285, 2.735793, 0.155906, -486.000427, 43.100075);
             break;
         case 768:
             cameraScene.changeScene(-0.8170f, 3.3595f, -2.0336f, 128.6998f, -15.2999f);
@@ -462,20 +500,50 @@ int main()
         case 1098:
             cameraScene.changeScene(1.1197f, 3.2867f, 0.0763f, -139.4997f, -30.30f);
             break;
+        case 1178: //New
+            cameraScene.changeScene(0.464260f, 2.627294f, -0.193444f, -488.500641f, -6.300014);
+            break;
+            //case 1220:
+            //    cameraScene.changeScene(1.1197f, 3.2867f, 0.0763f, -139.4997f, -30.30f);
+            //    break;
         case 1228:
             cameraScene.changeScene(-0.4493f, 2.0741f, 1.3832f, -31.8999f, -2.7999);
             break;
-        case 1460:
+        case 1280: //New camera
+            cameraScene.changeScene(1.698401f, 2.070444, 0.413728, -527.800537f, 21.000065);
+            break;
+        //case 1355: // Go back camera as frame 1228
+        //    cameraScene.changeScene(-0.4493f, 2.0741f, 1.3832f, -31.8999f, -2.7999);
+        //    break;
+        case 1355: //New, after the big jump
+            cameraScene.changeScene(1.144406f, 2.028810f, 0.315741f, 23.700129, -25.999989);
+            break;
+        case 1450: // New camera
+            cameraScene.changeScene(0.349872f, 1.736649f, 0.905867, -404.100494f, 10.200009f);
+            break;
+            //case 1489: //Quita esta, es igual que la 1620
+            //    cameraScene.changeScene(-2.1590f, 1.9138f, 1.6268f, -18.1998f, -8.20f);
+            //    break;
+        case 1545: // Last jump camera
+            cameraScene.changeScene(-0.566445f, 1.637479f, 0.748491f, -300.400757, 20.100063);
+            break;
+        case 1620: // Final macarena camera
             cameraScene.changeScene(-2.1590f, 1.9138f, 1.6268f, -18.1998f, -8.20f);
             break;
         default:
             break;
         }
 
-        glm::vec3 p(camera.GetPosition());
+        //glm::vec3 p(camera.GetPosition());
+        //printf("Camara x=%f\t y=%f\t z=%f\n", p.x, p.y, p.z);
+        //printf("Yaw = %f\t", camera.GetYaw());
+        //printf("Pitch = %f\n", camera.GetPitch());
+
+        //Me interesa la posición de la cámaras en tomas
+        glm::vec3 p(cameraScene.GetPosition());
         printf("Camara x=%f\t y=%f\t z=%f\n", p.x, p.y, p.z);
-        printf("Yaw = %f\t", camera.GetYaw());
-        printf("Pitch = %f\n", camera.GetPitch());
+        printf("Yaw = %f\t", cameraScene.GetYaw());
+        printf("Pitch = %f\n", cameraScene.GetPitch());
 
         //For keyframes
         inputKeyframes(window);
@@ -508,15 +576,15 @@ int main()
         // Enable skinning shader for the animated FBX
         // -------------------------------------------
         ourShader.use();
-        if (camScen) {
-            projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
-            view = camera.GetViewMatrix();
-        }
-        else
-        {
-            projection = glm::perspective(glm::radians(cameraScene.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
-            view = cameraScene.GetViewMatrix();
-        }
+        //if (camScen) {
+        //    projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
+        //    view = camera.GetViewMatrix();
+        //}
+        //else
+        //{
+        //    projection = glm::perspective(glm::radians(cameraScene.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 1000.0f);
+        //    view = cameraScene.GetViewMatrix();
+        //}
         ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
 
@@ -568,12 +636,33 @@ int main()
 
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3(movX, movY, movZ));
-        model = glm::scale(model, glm::vec3(0.001f));
+        model = glm::scale(model, glm::vec3(0.1f));
         //model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
         shader.setMat4("model", model);
 
-        // Draw an OBJ model
-        mujer.Draw(shader);
+        // Floating text with key actions
+        if (game) {
+            if (animationCount >= 0 && animationCount < 50)
+                start.Draw(shader); //S key
+            if (animationCount >= 135 && animationCount < 231)
+                jump1.Draw(shader); //J key
+            if (animationCount >= 335 && animationCount < 552)
+                jump_run1.Draw(shader); //R key
+            if (animationCount >= 552 && animationCount < 670)
+                jump_slide.Draw(shader); //S key
+            if (animationCount >= 670 && animationCount < 768)
+                cool.Draw(shader); //Cool message
+            if (animationCount >= 768 && animationCount < 927)
+                jump_again.Draw(shader); //J Key
+            if (animationCount >= 994 && animationCount < 1098)
+                dive.Draw(shader); //D key
+            if (animationCount >= 1228 && animationCount < 1440)
+                fly.Draw(shader); //F key
+
+        }
+        if (animationCount >= 1680)
+            macarena.Draw(shader); //M key
+
 
 
         // Finally show all the light sources as bright cubes
@@ -765,48 +854,82 @@ void renderQuad()
     glBindVertexArray(0);
 }
 
+void gameMode(GLFWwindow* window) {
+    if (animationCount == 219) {
+        animacion = false; //Deshabilita la animación
+        if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) //Continua solicitando presionar J
+            animacion = true;
+    }
+    if (animationCount == 361) {
+        animacion = false; 
+        if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) 
+            animacion = true;
+    }
+    if (animationCount == 618) {
+        animacion = false;
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+            animacion = true;
+    }
+    if (animationCount == 838) {
+        animacion = false;
+        if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
+            animacion = true;
+    }
+    if (animationCount == 1004) {
+        animacion = false;
+        if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
+            animacion = true;
+    }
+    if (animationCount == 1259) {
+        animacion = false;
+        if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+            animacion = true;
+    }
+    if (animationCount == 1695) {
+        animacion = false;
+        if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
+            animacion = true;
+    }
+
+}
+
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow* window)
 {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-    /*
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.ProcessKeyboard(FORWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.ProcessKeyboard(BACKWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.ProcessKeyboard(LEFT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.ProcessKeyboard(RIGHT, deltaTime);
-    */
-    if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
-        movX -= 0.1f;
-    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
-        movX += 0.1f;
-    if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
-        movY += 0.1f;
-    if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
-        //movY -= 0.1f;
-        animationCount = 100;
-    if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
-        movZ -= 0.1;
-    if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
-        movZ += 0.1;
 
-    if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
-        movX2 -= 0.1f;
-    if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
-        movX2 += 0.1f;
-    if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
-        movY2 += 0.1f;
-    if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
-        movY2 -= 0.1f;
-    if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
-        movZ2 -= 0.1;
-    if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
-        movZ2 += 0.1;
+    if (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS) {
+        animationCount = 0;
+        animacion = true;
+        game = true;
+    }
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) //disable game mode, demo mode
+        game = false;
+    //Repara bug en donde la animación chafea
+
+    //if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    //    camera.ProcessKeyboard(FORWARD, deltaTime);
+    //if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    //    camera.ProcessKeyboard(BACKWARD, deltaTime);
+    //if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    //    camera.ProcessKeyboard(LEFT, deltaTime);
+    //if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    //    camera.ProcessKeyboard(RIGHT, deltaTime);
+    //
+    //if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+    //    movX2 -= 0.1f;
+    //if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
+    //    movX2 += 0.1f;
+    //if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
+    //    movY2 += 0.1f;
+    //if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
+    //    movY2 -= 0.1f;
+    //if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
+    //    movZ2 -= 0.1;
+    //if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
+    //    movZ2 += 0.1;
     //Switch cameras
     if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
         if (cam == 0) {
@@ -827,17 +950,17 @@ void processInput(GLFWwindow* window)
         bloomKeyPressed = false;
     }
 
-    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-    {
-        if (exposure > 0.0f)
-            exposure -= 0.01f;
-        else
-            exposure = 0.0f;
-    }
-    else if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-    {
-        exposure += 0.01f;
-    }
+    //if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+    //{
+    //    if (exposure > 0.0f)
+    //        exposure -= 0.01f;
+    //    else
+    //        exposure = 0.0f;
+    //}
+    //else if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+    //{
+    //    exposure += 0.01f;
+    //}
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -932,12 +1055,12 @@ void inputKeyframes(GLFWwindow* window)
     {
         if (playAnimation < 1)
         {
-            if (play == false && (FrameIndex > 1))
+            if (play_key == false && (FrameIndex > 1))
             {
                 resetElements();
                 //First Interpolation               
                 interpolation();
-                play = true;
+                play_key = true;
                 playIndex = 0;
                 i_curr_steps = 0;
                 playAnimation++;
@@ -946,7 +1069,7 @@ void inputKeyframes(GLFWwindow* window)
             }
             else
             {
-                play = false;
+                play_key = false;
             }
         }
     }

@@ -10,7 +10,8 @@ uniform float weight[5] = float[] (0.2270270270, 0.1945945946, 0.1216216216, 0.0
 
 void main()
 {             
-     vec2 tex_offset = 1.9 / textureSize(image, 0); // gets size of single texel
+     vec2 tex_offset = 1.2 / textureSize(image, 0); // gets size of single texel
+     //1.9 original
      vec3 result = texture(image, TexCoords).rgb * weight[0];
      if(horizontal)
      {
