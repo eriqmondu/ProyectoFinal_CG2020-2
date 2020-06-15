@@ -22,7 +22,7 @@ void main()
     vec3 color = texture(diffuseTexture, fs_in.TexCoords).rgb;
     vec3 normal = normalize(fs_in.Normal);
     // ambient
-    vec3 ambient = 0.4 * color;
+    vec3 ambient = 0.5 * color;
     // lighting
     vec3 lighting = vec3(0.0);
     vec3 viewDir = normalize(viewPos - fs_in.FragPos);
@@ -41,9 +41,9 @@ void main()
     vec3 result = ambient + lighting;
     // check whether result is higher than some threshold, if so, output as bloom threshold color
     float brightness = dot(result, vec3(0.2126, 0.7152, 0.0722));
-    //if(brightness > 0.5)
+    if(brightness > 0.5)
         BrightColor = vec4(result, 1.0);
-    //else
-        //BrightColor = vec4(0.0, 0.0, 0.0, 1.0);
+    else
+        BrightColor = vec4(0.0, 0.0, 0.0, 1.0);
     FragColor = vec4(result, 1.0);
 }

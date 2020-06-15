@@ -25,6 +25,7 @@ void main()
     vec3 hdrColor = texture(scene, TexCoords).rgb;
     vec3 bloomColor = texture(bloomBlur, TexCoords).rgb;
     //Efecto de emborronado. Elimina el canal del color de alto rango dinámico.
+    hdrColor = hdrColor*0.8;
     if(bloom){
         hdrColor += bloomColor; // additive blending
     }

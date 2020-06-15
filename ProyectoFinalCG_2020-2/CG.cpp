@@ -442,9 +442,9 @@ int main()
 
         // Interactive light positions
         std::vector<glm::vec3> lightPositions;
-        lightPositions.push_back(glm::vec3(0.40f, 5.00f, -0.40f));
+        lightPositions.push_back(glm::vec3(0.40f, 4.00f, -0.40f));
         //lightPositions.push_back(glm::vec3(0.80f, 4.8f, 0.8f));
-        lightPositions.push_back(glm::vec3(sin(glfwGetTime() / 2) * 3, -1.0f, -sin(glfwGetTime() / 2) * 3));
+        lightPositions.push_back(glm::vec3(sin(glfwGetTime()*2) * 5, -1.0f, -sin(glfwGetTime()*2) * 5));
         //lightPositions.push_back(glm::vec3(movX2, movY2, movZ2));
 
 
@@ -462,7 +462,7 @@ int main()
                     animationCount = 0;
                     animacion = false;
                 }
-                cout << "Second: " << animationCount << endl;
+                //cout << "Second: " << animationCount << endl;
                 batman.SetPose((float)animationCount, gBones);
                 elapsedTime = 0.0f;
             }
@@ -566,10 +566,10 @@ int main()
         //printf("Pitch = %f\n", camera.GetPitch());
 
         // Me interesa la posición de la cámaras en tomas
-        glm::vec3 p(cameraScene.GetPosition());
-        printf("Camara x=%f\t y=%f\t z=%f\n", p.x, p.y, p.z);
-        printf("Yaw = %f\t", cameraScene.GetYaw());
-        printf("Pitch = %f\n", cameraScene.GetPitch());
+        //glm::vec3 p(cameraScene.GetPosition());
+        //printf("Camara x=%f\t y=%f\t z=%f\n", p.x, p.y, p.z);
+        //printf("Yaw = %f\t", cameraScene.GetYaw());
+        //printf("Pitch = %f\n", cameraScene.GetPitch());
 
         //For keyframes
         inputKeyframes(window);
@@ -762,7 +762,7 @@ int main()
         shaderBloomFinal.setFloat("exposure", exposure);
         renderQuad();
 
-        std::cout << "bloom: " << (bloom ? "on" : "off") << "| exposure: " << exposure << std::endl;
+        //std::cout << "bloom: " << (bloom ? "on" : "off") << "| exposure: " << exposure << std::endl;
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
