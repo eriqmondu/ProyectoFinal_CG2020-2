@@ -42,8 +42,8 @@ void mainMusic();
 void macarenaMusic();
 
 //Keep a 16:9 resolution, please.
-const unsigned int SCR_WIDTH = 640;
-const unsigned int SCR_HEIGHT = 360;
+const unsigned int SCR_WIDTH = 1024;
+const unsigned int SCR_HEIGHT = 600;
 
 // Bloom effect switch
 bool bloom = true;
@@ -128,7 +128,7 @@ void interpolation(void)
 void animate(void)
 {
     //Object movement
-    if (play_key)
+    if (animacion)
     {
         if (i_curr_steps >= i_max_steps) //end of animation between frames?
         {
@@ -139,7 +139,7 @@ void animate(void)
                 printf("Frame index= %d\n", FrameIndex);
                 printf("End animation\n");
                 playIndex = 0;
-                play_key = false;
+                animacion = false;
             }
             else //Next frame interpolations
             {
@@ -242,7 +242,7 @@ int main()
     // OBJ model loading
     // -----------------
     std::cout << "Loading OBJ Models..." << std::endl;
-    Model edificio((char*)"Models/Ciudad_final.obj");
+    Model edificio((char*)"Models/Ciudad_final1.obj");
 
     // Floating text objects
     Model start((char*)"Models/Text/start_running.obj");
@@ -461,6 +461,7 @@ int main()
                 if (animationCount > keys - 1) {
                     animationCount = 0;
                     animacion = false;
+                    resetElements();
                 }
                 //cout << "Second: " << animationCount << endl;
                 batman.SetPose((float)animationCount, gBones);
@@ -572,7 +573,6 @@ int main()
         //printf("Pitch = %f\n", cameraScene.GetPitch());
 
         //For keyframes
-        inputKeyframes(window);
         animate();
         camera.animateCam(posXcam + movCam_x, posYcam + movCam_y, posZcam + movCam_z);
 
@@ -934,6 +934,12 @@ void processInput(GLFWwindow* window)
         animacion = true;
         game = true;
         mainMusic();
+        ///////For KeyFrames
+        resetElements();               
+        interpolation();    //First Interpolation
+        playIndex = 0;
+        i_curr_steps = 0;
+        playAnimation++;
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) //disable game mode, demo mode
         game = false;
@@ -1076,40 +1082,6 @@ unsigned int loadTexture(char const* path, bool gammaCorrection)
     }
 
     return textureID;
-}
-
-//////Function to enable keyframes animation
-void inputKeyframes(GLFWwindow* window)
-{
-    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
-    {
-        if (playAnimation < 1)
-        {
-            if (play_key == false && (FrameIndex > 1))
-            {
-                resetElements();
-                //First Interpolation               
-                interpolation();
-                play_key = true;
-                playIndex = 0;
-                i_curr_steps = 0;
-                playAnimation++;
-                printf("Press 0 to enable animation'\n");
-                enableAnimation = 0;
-            }
-            else
-            {
-                play_key = false;
-            }
-        }
-    }
-    if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
-    {
-        if (enableAnimation < 1)
-        {
-            playAnimation = 0;
-        }
-    }
 }
 
 void initialKeyFrames() {
