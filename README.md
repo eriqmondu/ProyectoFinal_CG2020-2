@@ -1,4 +1,5 @@
-# ProyectoFinal_CG2020-2
+# Animación "Parkour en 3D"
+#OpenGL 4.0
 Proyecto final de Computación Gráfica. Facultad de Ingeniería UNAM.
 
 Realizado en VS 2019
