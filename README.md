@@ -1,5 +1,5 @@
 # Animación "Parkour en 3D"
-#OpenGL 4.0
+OpenGL 4.0 en Windows 10 64 bits
 Proyecto final de Computación Gráfica. Facultad de Ingeniería UNAM.
 
 Realizado en VS 2019
